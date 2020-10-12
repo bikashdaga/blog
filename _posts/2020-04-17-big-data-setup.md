@@ -1,11 +1,11 @@
 ---
 toc: true
-description: Setup your own Big Data infrastructure at home.
+description: "Setup your own Big Data infrastructure at home."
 categories: [markdown, big data, hadoop, spark, hive]
 comments: true
 image: images/bigdata_tut/intro.jpg
+title: "Tutorial: How to Setup your own Big Data Environment with Hadoop, Spark and Hive for Data Science"
 ---
-# Tutorial: How to Setup your own Big Data Environment with Hadoop, Spark and Hive for Data Science
 
 Working on your own data science projects are a great opportunity to learn some new skills and hone existing skills, but what if you want to use technologies that you would use in industry such as Hadoop, Spark on a distributed cluster, Hive, etc. and have them all integrated? This is where the value comes from when building your own infrastructure. 
 
@@ -680,4 +680,3 @@ If you want to take a look at a Feature Store and get started for free, I recomm
 I encourage all feedback about this post. You can e-mail me at sidhuashton@gmail.com or leave a comment on the post if you have any questions or need any help.
 
 You can also reach me and follow me on Twitter at [@ashtonasidhu](https://twitter.com/ashtonasidhu).
-

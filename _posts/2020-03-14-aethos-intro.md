@@ -1,11 +1,11 @@
 ---
 toc: true
-description: Introduction to Aethos.
+description: "Introduction to Aethos."
 categories: [markdown, aethos]
 comments: true
 image: https://miro.medium.com/max/742/1*WdxHNOegMN9Eb9fZRN1cCg.png
+title: "Aethos — A Data Science Library to Automate your Workflow"
 ---
-# Aethos — A Data Science Library to Automate your Workflow
 
 As a Data Scientist in industry, there are a few pain points that I’m sure a lot of other data scientists can relate to:
 

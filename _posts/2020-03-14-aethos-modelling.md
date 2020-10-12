@@ -1,12 +1,11 @@
 ---
 toc: true
-description: Introduction to Aethos Modelling.
+description: "Introduction to Aethos Modelling."
 categories: [markdown, aethos]
 comments: true
 image: https://miro.medium.com/max/1760/1*-Ng-OvO4PohgDaUL989CzQ.png
+title: "Training, Tracking, Analyzing, Interpreting and Serving Models with One Line of Code"
 ---
-
-# Training, Tracking, Analyzing, Interpreting and Serving Models with One Line of Code
 
 As a data scientist, rapid experimentation is extremely important. If an idea doesn’t work it’s best to fail quickly and find out sooner rather than later.
 
