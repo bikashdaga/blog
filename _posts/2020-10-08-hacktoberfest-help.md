@@ -1,5 +1,6 @@
 ---
 toc: true
+layout: post
 description: Guide and tips on how to get started/make a contribution during Hacktoberfest.
 categories: [markdown, data science, open source, hacktoberfest, ml]
 comments: true
