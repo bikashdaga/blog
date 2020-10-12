@@ -57,7 +57,7 @@ Fill out the pull request template, if there is one, or one that is outlined in 
 
 The first step towards your first open source contribution is to pick a project you want to contribute to. The best way that I have experienced is to contribute to projects you use often or are actively using. If you have extensively used a project, you have probably come across some across some bugs or enhancements that will improve the quality of the project. This is how I started my journey in Open Source, by trying to improve projects that I was using daily.
 
-### Look at existing Github issues
+### Look at existing Github Issues
 
 If you are looking for an issue or way to contribute to a project, a good place to start is Github's built in `Issues` tab. This is where users and project maintainers can log bugs and feature enhancements. Project maintainers will go through these issues and tag them, gather more information, add meta data, etc. One of the tags they will add is a "good first issue" tag to inform potential contributors that this issue is good for first time contributors or contributors who are new to the project.
 
@@ -65,7 +65,7 @@ If you are looking for an issue or way to contribute to a project, a good place 
 
 These issues are recommended for contributors who are either new to open source or to the project itself to help them get started and make a contribution. Leverage these if you can't find your own bug to fix or enhancement to add.
 
-### Read the contribution guidelines
+### Read the Contribution Guidelines
 
 There is nothing worse than putting in all this work of finding a project, isolating a bug or developing a new feature and to have it rejected or not even looked at because you didn't follow coding, formatting or commit message standards. The good news is that all of these are available, usually in a Contribution section in the projects README or in the Contributing Guidelines section of the project. Projects will often have automated formatting checks that run when you create a pull request and your pull request won't often be looked at until these basic checks are passed.
 
@@ -75,7 +75,7 @@ There is nothing worse than putting in all this work of finding a project, isola
     2) Follow coding & documentation best practices."
  %}
 
- ### Every contribution matters
+ ### Every Contribution Matters
 
 Every contribution in open source matters regardless how big or small. Whether it's from a usability perspective or reading the documentation, if you are experiencing a bug or a grievance with a project there are others who are experiencing it as well. Documentation is a large component of open source software as every project needs it. It is often a great place to start contributing to a project as you gain an understanding of what a project is about. It provides background information of design decisions and considerations of the project, which will in turn help you in understand the code. 
 
@@ -95,7 +95,7 @@ If at this point you have not received a reply, which does not happen often (has
 
 Whether you are a Data Engineer, ML Engineer or Data Scientist contributing to Open Source will help you become better and progress in your field. From understanding how projects are built and structured, gaining deep intricate knowledge of a key library, navigating large code bases, writing production level code or even just learning a new method to solve a problem. All of these skills will translate directly into your profession or your next project.
 
-### Meet new engineers, developers & scientists
+### Meet new Engineers, Developers & Scientists
 
 The greatest benefit of contributing to Open Source is the opportunity to work and interact with the minds who created a tool that is used by thousands of people world wide. You get direct insight into how they they created a solution to solve a widespread problem. Furthermore, you may end up connecting, bounce ideas off one another and collaborate on future projects together. Personally, I've connected with project maintainers whose project I have contributed to and have kept in touch with them on Twitter and LinkedIn. 
 
