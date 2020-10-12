@@ -1,13 +1,167 @@
-<h1 id="a-data-scientists-guide-to-hacktoberfest">A Data Scientist’s Guide to Hacktoberfest</h1>
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Hacktoberfest Help | fastpages</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Hacktoberfest Help" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Guide and tips on how to get started/make a contribution during Hacktoberfest." />
+<meta property="og:description" content="Guide and tips on how to get started/make a contribution during Hacktoberfest." />
+<link rel="canonical" href="https://ashton-sidhu.github.io/blog/markdown/data%20science/open%20source/hacktoberfest/ml/2020/10/08/hacktoberfest-help.html" />
+<meta property="og:url" content="https://ashton-sidhu.github.io/blog/markdown/data%20science/open%20source/hacktoberfest/ml/2020/10/08/hacktoberfest-help.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:image" content="https://ashton-sidhu.github.io/blog/images/hacktoberfest/bad2.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-10-08T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Guide and tips on how to get started/make a contribution during Hacktoberfest.","url":"https://ashton-sidhu.github.io/blog/markdown/data%20science/open%20source/hacktoberfest/ml/2020/10/08/hacktoberfest-help.html","@type":"BlogPosting","headline":"Hacktoberfest Help","dateModified":"2020-10-08T00:00:00-05:00","datePublished":"2020-10-08T00:00:00-05:00","image":"https://ashton-sidhu.github.io/blog/images/hacktoberfest/bad2.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://ashton-sidhu.github.io/blog/markdown/data%20science/open%20source/hacktoberfest/ml/2020/10/08/hacktoberfest-help.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://ashton-sidhu.github.io/blog/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
 
-<h2 id="what-is-hacktoberfest">What is Hacktoberfest</h2>
-<hr />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+
+
+<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Hacktoberfest Help</h1><p class="page-description">Guide and tips on how to get started/make a contribution during Hacktoberfest.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-08T00:00:00-05:00" itemprop="datePublished">
+        Oct 8, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      9 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#markdown">markdown</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#open source">open source</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#hacktoberfest">hacktoberfest</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#ml">ml</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#a-data-scientists-guide-to-hacktoberfest">A Data Scientist’s Guide to Hacktoberfest</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#what-is-hacktoberfest">What is Hacktoberfest</a></li>
+<li class="toc-entry toc-h2"><a href="#how-i-got-into-open-source">How I got into Open Source</a></li>
+<li class="toc-entry toc-h2"><a href="#tips">Tips</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#learn-how-to-make-a-pull-request">Learn how to make a Pull Request</a></li>
+<li class="toc-entry toc-h3"><a href="#start-with-a-library-you-use-often-big-or-small">Start with a library you use often, big or small</a></li>
+<li class="toc-entry toc-h3"><a href="#look-at-existing-github-issues">Look at existing Github issues</a></li>
+<li class="toc-entry toc-h3"><a href="#read-the-contribution-guidelines">Read the contribution guidelines</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#what-happens-next">What Happens Next</a></li>
+<li class="toc-entry toc-h2"><a href="#benefits">Benefits</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#become-a-better-engineer-or-scientist">Become a better Engineer or Scientist</a></li>
+<li class="toc-entry toc-h3"><a href="#meet-new-engineers-developers--scientists">Meet new engineers, developers &amp; scientists</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
+<li class="toc-entry toc-h2"><a href="#feedback">Feedback</a></li>
+</ul>
+</li>
+</ul><h1 id="a-data-scientists-guide-to-hacktoberfest">
+<a class="anchor" href="#a-data-scientists-guide-to-hacktoberfest" aria-hidden="true"><span class="octicon octicon-link"></span></a>A Data Scientist’s Guide to Hacktoberfest</h1>
+
+<h2 id="what-is-hacktoberfest">
+<a class="anchor" href="#what-is-hacktoberfest" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Hacktoberfest</h2>
+<hr>
 <p>Open source projects are a pillar for the data industry, without them projects such as Pandas, Numpy Sci-kit Learn and the entire big data Apache stack would not exist. Hacktoberfest is a month long event where developers can contribute to open source projects on Github and receive free swag. To be eligible to receive the free swag, you must commit four successful Pull Requests on projects that have opted in to Hacktoberfest. To try and easily get the free swag, some contributors submit non meaningful contributions, leading to unhappy project maintainers.</p>
 
 <p>In this post we’ll go through how you can give back to the community and make a meaningful contributions open source projects.</p>
 
-<h2 id="how-i-got-into-open-source">How I got into Open Source</h2>
-<hr />
+<h2 id="how-i-got-into-open-source">
+<a class="anchor" href="#how-i-got-into-open-source" aria-hidden="true"><span class="octicon octicon-link"></span></a>How I got into Open Source</h2>
+<hr>
 <p>I first got into Open Source when I was working with two projects, <a href="https://github.com/interpretml/interpret">interpret</a> and <a href="https://github.com/mouradmourafiq/pandas-summary">pandas-summary</a>. In both cases the usage of the projects had not completely covered my use cases, albeit they were very minor.</p>
 
 <p>With interpret I was trying to use the library to explain/interpret a Sklearn classifier. The underlying issue is that the <code class="language-plaintext highlighter-rouge">.predict</code> method returns an integer (0, 1, etc.) for classifiers. When these integer values were used to calculate the Morris Sensitivity, an error was thrown saying that the data had to be a <code class="language-plaintext highlighter-rouge">float</code>. In this case, <a href="https://github.com/interpretml/interpret/pull/64">the fix was simple</a> - cast the integers returned as integers by the Sklearn classifier to a float!  Before the fix, anyone who tried to interpret a Sklearn classifier would get an error and this simple contribution allowed all users to interpret Sklearn classification models.</p>
@@ -18,13 +172,15 @@
 
 <p>From there I went on to be a major contributor of the <a href="https://github.com/PatrikHlobil/Pandas-Bokeh">pandas-bokeh</a> library, contributed bug fixes and UI improvements to <a href="https://github.com/nteract/nteract">Nteract</a> and added major feature integrations to <a href="https://github.com/PrefectHQ/prefect">Prefect</a>.</p>
 
-<h2 id="tips">Tips</h2>
-<hr />
-<h3 id="learn-how-to-make-a-pull-request">Learn how to make a Pull Request</h3>
+<h2 id="tips">
+<a class="anchor" href="#tips" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tips</h2>
+<hr>
+<h3 id="learn-how-to-make-a-pull-request">
+<a class="anchor" href="#learn-how-to-make-a-pull-request" aria-hidden="true"><span class="octicon octicon-link"></span></a>Learn how to make a Pull Request</h3>
 
 <p>A pull request is a method of contributing your code into a project. To start off, find a project you want to contribute to and fork the project by clicking the <code class="language-plaintext highlighter-rouge">fork</code> button at the top right corner of the project page. This will create a copy of the project in its current state under your repositories.</p>
 
-<p><img src="/blog/images/hacktoberfest/fork.png" alt="" title="Forking a Project" /></p>
+<p><img src="/blog/images/hacktoberfest/fork.png" alt="" title="Forking a Project"></p>
 
 <p>Once you have forked the project, navigate to the repository under your Projects in Github. Under the project name it should say <code class="language-plaintext highlighter-rouge">forked from ...</code>.</p>
 
@@ -38,28 +194,31 @@
 
 <p>Navigate to the forked repository project page. You will see a prompt to create a pull request. If you don’t navigate to the pull requests tab and create one from there by selecting <code class="language-plaintext highlighter-rouge">New Pull Request</code>.</p>
 
-<p><img src="/blog/images/hacktoberfest/pullrequest.png" alt="" title="Creating a Pull Request" /></p>
+<p><img src="/blog/images/hacktoberfest/pullrequest.png" alt="" title="Creating a Pull Request"></p>
 
 <p>Fill out the pull request template, if there is one, or one that is outlined in the Contributing guidelines. Once that is completed, your pull request is good to go and wait for feedback!</p>
 
-<h3 id="start-with-a-library-you-use-often-big-or-small">Start with a library you use often, big or small</h3>
+<h3 id="start-with-a-library-you-use-often-big-or-small">
+<a class="anchor" href="#start-with-a-library-you-use-often-big-or-small" aria-hidden="true"><span class="octicon octicon-link"></span></a>Start with a library you use often, big or small</h3>
 
 <p>The first step towards your first open source contribution is to pick a project you want to contribute to. The best way that I have experienced is to contribute to projects you use often or are actively using. If you have extensively used a project, you have probably come across some across some bugs or enhancements that will improve the quality of the project. This is how I started my journey in Open Source, by trying to improve projects that I was using daily.</p>
 
-<h3 id="look-at-existing-github-issues">Look at existing Github issues</h3>
+<h3 id="look-at-existing-github-issues">
+<a class="anchor" href="#look-at-existing-github-issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Look at existing Github issues</h3>
 
 <p>If you are looking for an issue or way to contribute to a project, a good place to start is Github’s built in <code class="language-plaintext highlighter-rouge">Issues</code> tab. This is where users and project maintainers can log bugs and feature enhancements. Project maintainers will go through these issues and tag them, gather more information, add meta data, etc. One of the tags they will add is a “good first issue” tag to inform potential contributors that this issue is good for first time contributors or contributors who are new to the project.</p>
 
-<p><img src="/blog/images/hacktoberfest/firstime.png" alt="" title="First Time Issues" /></p>
+<p><img src="/blog/images/hacktoberfest/firstime.png" alt="" title="First Time Issues"></p>
 
 <p>These issues are recommended for contributors who are either new to open source or to the project itself to help them get started and make a contribution. Leverage these if you can’t find your own bug to fix or enhancement to add.</p>
 
-<h3 id="read-the-contribution-guidelines">Read the contribution guidelines</h3>
+<h3 id="read-the-contribution-guidelines">
+<a class="anchor" href="#read-the-contribution-guidelines" aria-hidden="true"><span class="octicon octicon-link"></span></a>Read the contribution guidelines</h3>
 
 <p>There is nothing worse than putting in all this work of finding a project, isolating a bug or developing a new feature and to have it rejected or not even looked at because you didn’t follow coding, formatting or commit message standards. The good news is that all of these are available, usually in a Contribution section in the projects README or in the Contributing Guidelines section of the project. Projects will often have automated formatting checks that run when you create a pull request and your pull request won’t often be looked at until these basic checks are passed.</p>
 
 <div class="Toast Toast--warning googoo">
-   <span class="Toast-icon"><svg class="octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path></svg></span>
+   <span class="Toast-icon"><svg class="octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path></svg></span>
    <span class="Toast-content">If you don't see a contribution section or a project doesn't have Contributing Guidelines, don't just do whatever you want.
 
     1) Follow the coding &amp; documentation style in the project as close as you can.
@@ -72,30 +231,77 @@
 
 <p>Documentation is the first place users go to find information and the more thoroughly documented a project is, the more of a user base it will have. Developers love documented projects and when a project doesn’t have documentation, or has poor documentation, a developer will think twice before adding it to their work flow. Adding documentation or fixing even the smallest bug may impact hundreds or even thousands of users who use that project every day and many will thank you for it.</p>
 
-<h2 id="what-happens-next">What Happens Next</h2>
-<hr />
+<h2 id="what-happens-next">
+<a class="anchor" href="#what-happens-next" aria-hidden="true"><span class="octicon octicon-link"></span></a>What Happens Next</h2>
+<hr>
 <p>Very rarely will your contribution get merged right away. Within a couple of days someone from the project team will comment their feedback or notify you that they are reviewing your pull request. Address the comments, ask questions, clarify anything you do not understand, make the proposed changes, if there are any, and your change with get merged shortly after!</p>
 
 <p>If you do not receive any feedback on your pull request within a week, message a project maintainer and politely ask them what the status is. On larger projects there are often tons of pull requests and they may have forgotten about the pull request or have not got around to reviewing it yet.</p>
 
 <p>If at this point you have not received a reply, which does not happen often (has never happened to me), take the skills and learning points from this project and move on to the next project. Once you make the pull request and have messaged the project maintainers, the rest is out of your hands. This is the only real unfortunate part of open source and one you should not take to heart.</p>
 
-<h2 id="benefits">Benefits</h2>
-<hr />
-<h3 id="become-a-better-engineer-or-scientist">Become a better Engineer or Scientist</h3>
+<h2 id="benefits">
+<a class="anchor" href="#benefits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Benefits</h2>
+<hr>
+<h3 id="become-a-better-engineer-or-scientist">
+<a class="anchor" href="#become-a-better-engineer-or-scientist" aria-hidden="true"><span class="octicon octicon-link"></span></a>Become a better Engineer or Scientist</h3>
 
 <p>Whether you are a Data Engineer, ML Engineer or Data Scientist contributing to Open Source will help you become better and progress in your field. From understanding how projects are built and structured, gaining deep intricate knowledge of a key library, navigating large code bases, writing production level code or even just learning a new method to solve a problem. All of these skills will translate directly into your profession or your next project.</p>
 
-<h3 id="meet-new-engineers-developers--scientists">Meet new engineers, developers &amp; scientists</h3>
+<h3 id="meet-new-engineers-developers--scientists">
+<a class="anchor" href="#meet-new-engineers-developers--scientists" aria-hidden="true"><span class="octicon octicon-link"></span></a>Meet new engineers, developers &amp; scientists</h3>
 
 <p>The greatest benefit of contributing to Open Source is the opportunity to work and interact with the minds who created a tool that is used by thousands of people world wide. You get direct insight into how they they created a solution to solve a widespread problem. Furthermore, you may end up connecting, bounce ideas off one another and collaborate on future projects together. Personally, I’ve connected with project maintainers whose project I have contributed to and have kept in touch with them on Twitter and LinkedIn.</p>
 
-<h2 id="conclusion">Conclusion</h2>
-<hr />
+<h2 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
+<hr>
 <p>Today you may not be able to contribute a new feature, but being around the project, reading the code, reading the documentation, all of it gives you insight into the project. From there, a small contribution to documentation, might lead to a bug fix that was documented, which leads to a higher understanding of the project, which then leads to your first feature.</p>
 
 <p>The moral of the story is, contribute in any way you can and eventually you will reach that goal of developing the new feature, starting your own OS project and even becoming a key contributor to a project.</p>
 
-<h2 id="feedback">Feedback</h2>
-<hr />
+<h2 id="feedback">
+<a class="anchor" href="#feedback" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feedback</h2>
+<hr>
 <p>I encourage any and all feedback about any of my posts. You can message me on <a href="https://twitter.com/ashtonasidhu">twitter</a> or e-mail me at sidhuashton@gmail.com.</p>
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Ashton-Sidhu/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/markdown/data%20science/open%20source/hacktoberfest/ml/2020/10/08/hacktoberfest-help.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/Ashton-Sidhu" title="Ashton-Sidhu"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/ashtonasidhu" title="ashtonasidhu"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
