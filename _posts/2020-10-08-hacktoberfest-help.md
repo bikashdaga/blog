@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: "Guide and tips on how to get started/make a contribution during Hacktoberfest."
 categories: [markdown, data science, open source, hacktoberfest, ml]
-image: images/hacktoberfest/bad2.jpg
+image: images/hacktoberfest/bad2.png
 title: "A Data Scientist's Guide to Hacktoberfest"
 ---
 
