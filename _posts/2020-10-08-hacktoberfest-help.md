@@ -5,9 +5,8 @@ description: Guide and tips on how to get started/make a contribution during Hac
 categories: [markdown, data science, open source, hacktoberfest, ml]
 comments: true
 image: images/hacktoberfest/bad2.jpg
+title: A Data Scientist's Guide to Hacktoberfest
 ---
-
-# A Data Scientist's Guide to Hacktoberfest
 
 ## What is Hacktoberfest
 ---
