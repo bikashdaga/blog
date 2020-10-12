@@ -67,7 +67,7 @@ These issues are recommended for contributors who are either new to open source 
 
 There is nothing worse than putting in all this work of finding a project, isolating a bug or developing a new feature and to have it rejected or not even looked at because you didn't follow coding, formatting or commit message standards. The good news is that all of these are available, usually in a Contribution section in the projects README or in the Contributing Guidelines section of the project. Projects will often have automated formatting checks that run when you create a pull request and your pull request won't often be looked at until these basic checks are passed.
 
-{% include alert.html text="If you don't see a contribution section or a project doesn't have Contributing Guidelines, don't just do whatever you want.<br>1) Follow the coding & documentation style in the project as close as you can.<br>2) Follow coding & documentation best practices."%}
+{% include alert.html text="If you don't see a contribution section or a project doesn't have Contributing Guidelines, don't just do whatever you want.<br><br>&emsp;1) Follow the coding & documentation style in the project as close as you can.<br>&emsp;2) Follow coding & documentation best practices."%}
 
 ### Every Contribution Matters
 
