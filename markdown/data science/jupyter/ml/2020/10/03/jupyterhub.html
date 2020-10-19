@@ -211,7 +211,7 @@ services:
       DOCKER_NETWORK_NAME: ${COMPOSE_PROJECT_NAME}_default
       HUB_IP: jupyterhub_hub
     ports:
-      - 8080:8080
+      - 8000:8000
     restart: unless-stopped
 
   # Configuration for the single-user servers
@@ -223,9 +223,14 @@ volumes:
   jupyterhub_data:
 </code></pre>
 
-<p>The key environment variable to note is the <code class="language-plaintext highlighter-rouge">DOCKER_JUPYTER_IMAGE</code>. This is the Jupyter environment that will be spun up every time we access the server.</p>
+<p>The key environment variables to note are <code class="language-plaintext highlighter-rouge">DOCKER_JUPYTER_IMAGE</code> and <code class="language-plaintext highlighter-rouge">DOCKER_NETWORK_NAME</code>. JupyterHub will create Jupyter Notebooks with the images defined in the environment variable.For more information on selecting Jupyter images you can visit the following Jupyter <a href="https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html">documentation</a>.</p>
 
-<p>For more information on selecting Jupyter images you can visit the following Jupyter <a href="https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html">documentation</a>.</p>
+<p><code class="language-plaintext highlighter-rouge">DOCKER_NETWORK_NAME</code> is the name of the Docker network used by the services. This network gets an automatic name from Docker Compose, but the Hub needs to know this name to connect the Jupyter Notebook servers to it. To control the network name we use a little hack: we pass an environment variable COMPOSE_PROJECT_NAME to Docker Compose, and the network name is obtained by appending _default to it.</p>
+
+<p>Create a file called <code class="language-plaintext highlighter-rouge">.env</code> in the same directory as the <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> file and add the following contents:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">COMPOSE_PROJECT_NAME</span><span class="o">=</span>jupyter_hub
+</code></pre></div></div>
 
 <h3 id="stopping-idle-servers">
 <a class="anchor" href="#stopping-idle-servers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stopping Idle Servers</h3>
@@ -246,7 +251,7 @@ volumes:
 
 <p>To finish off, we need to define configuration options such, volume mounts, Docker images, services, authentication, etc. for our JupyterHub instance.</p>
 
-<p>Below is a simple configuration file I use.</p>
+<p>Below is a simple <code class="language-plaintext highlighter-rouge">jupyterhub_config.py</code> configuration file I use.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -296,7 +301,7 @@ volumes:
 <a class="anchor" href="#start-the-server" aria-hidden="true"><span class="octicon octicon-link"></span></a>Start the Server</h2>
 <hr>
 
-<p>To start the server, simply run <code class="language-plaintext highlighter-rouge">docker-compose up -d</code>, navigate to <code class="language-plaintext highlighter-rouge">localhost:8080</code> in your browser and you should be able to see the JupyterHub landing page.</p>
+<p>To start the server, simply run <code class="language-plaintext highlighter-rouge">docker-compose up -d</code>, navigate to <code class="language-plaintext highlighter-rouge">localhost:8000</code> in your browser and you should be able to see the JupyterHub landing page.</p>
 
 <p><img src="/blog/images/jupyterhub/landingpage.png" alt=""></p>
 
@@ -304,7 +309,7 @@ volumes:
 
 <p><img src="/blog/images/jupyterhub/ifconfig.png" alt=""></p>
 
-<p>From your other device, navigate to the IP you found on port 8080: <code class="language-plaintext highlighter-rouge">http://IP:8080</code> and you should see the JupyterHub landing page!</p>
+<p>From your other device, navigate to the IP you found on port 8000: <code class="language-plaintext highlighter-rouge">http://IP:8000</code> and you should see the JupyterHub landing page!</p>
 
 <h3 id="authenticating">
 <a class="anchor" href="#authenticating" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authenticating</h3>
