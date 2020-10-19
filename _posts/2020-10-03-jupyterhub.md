@@ -41,9 +41,8 @@ At a high level the architecture is not complex and can even scale if you have m
 ---
 To build our at home JupyterHub server we will use the pre-built Docker images of JupyterHub & JupyterLab.
 
-### JupyterHub
 
-#### Docker
+### Dockerfiles
 
 The JupyterHub Docker image is simple.
 
@@ -98,7 +97,7 @@ The key environment variable to note is the `DOCKER_JUPYTER_IMAGE`. This is the 
 
 For more information on selecting Jupyter images you can visit the following Jupyter [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html).
 
-#### Stopping Idle Servers
+### Stopping Idle Servers
 
 Since this is our home setup, we want to be able to stop idle instances to preserve memory on our machine. JupyterHub has services that can run along side itself and one of them is [jupyterhub-idle-culler](https://github.com/jupyterhub/jupyterhub-idle-culler). This service stops any instances that are idle for a prolonged duration.
 
@@ -109,7 +108,7 @@ Create a new file called `cull_idle_servers.py` and copy the contents of this fi
 
 To find out more about services, JupyterHub has official [documentation](https://jupyterhub.readthedocs.io/en/stable/reference/services.html) on them.
 
-#### Jupyterhub Config
+### Jupyterhub Config
 
 To finish off, we need to define configuration options for our JupyterHub instance. For example, volume mounts, Docker images, services, authentication, etc.
 
