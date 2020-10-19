@@ -75,7 +75,7 @@ services:
       DOCKER_NETWORK_NAME: ${COMPOSE_PROJECT_NAME}_default
       HUB_IP: jupyterhub_hub
     ports:
-      - 8080:8080
+      - 8000:8000
     restart: unless-stopped
 
   # Configuration for the single-user servers
@@ -87,9 +87,16 @@ volumes:
   jupyterhub_data:
 ```
 
-The key environment variable to note is the `DOCKER_JUPYTER_IMAGE`. This is the Jupyter environment that will be spun up every time we access the server.
+The key environment variables to note are `DOCKER_JUPYTER_IMAGE` and `DOCKER_NETWORK_NAME`. JupyterHub will create Jupyter Notebooks with the images defined in the environment variable.For more information on selecting Jupyter images you can visit the following Jupyter [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html).
 
-For more information on selecting Jupyter images you can visit the following Jupyter [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html).
+
+`DOCKER_NETWORK_NAME` is the name of the Docker network used by the services. This network gets an automatic name from Docker Compose, but the Hub needs to know this name to connect the Jupyter Notebook servers to it. To control the network name we use a little hack: we pass an environment variable COMPOSE_PROJECT_NAME to Docker Compose, and the network name is obtained by appending _default to it.
+
+Create a file called `.env` in the same directory as the `docker-compose.yml` file and add the following contents:
+
+```shell
+COMPOSE_PROJECT_NAME=jupyter_hub
+```
 
 ### Stopping Idle Servers
 
@@ -106,7 +113,7 @@ To find out more about JupyterHub services, check out their official [documentat
 
 To finish off, we need to define configuration options such, volume mounts, Docker images, services, authentication, etc. for our JupyterHub instance.
 
-Below is a simple configuration file I use.
+Below is a simple `jupyterhub_config.py` configuration file I use.
 
 ```python
 import os
@@ -150,7 +157,7 @@ Take note of the following configuration options:
 ## Start the Server
 ---
 
-To start the server, simply run `docker-compose up -d`, navigate to `localhost:8080` in your browser and you should be able to see the JupyterHub landing page.
+To start the server, simply run `docker-compose up -d`, navigate to `localhost:8000` in your browser and you should be able to see the JupyterHub landing page.
 
 ![]({{ site.baseurl }}/images/jupyterhub/landingpage.png)
 
@@ -159,7 +166,7 @@ To access it on other devices on your network such asva laptop, an iPad, etc, id
 
 ![]({{ site.baseurl }}/images/jupyterhub/ifconfig.png)
 
-From your other device, navigate to the IP you found on port 8080: `http://IP:8080` and you should see the JupyterHub landing page!
+From your other device, navigate to the IP you found on port 8000: `http://IP:8000` and you should see the JupyterHub landing page!
 
 ### Authenticating
 
