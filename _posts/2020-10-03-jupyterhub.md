@@ -57,7 +57,7 @@ We use the pre-built JupyterHub Docker Image and add our own configuration file 
 
 ### Docker Compose
 
-To bring everything together, let's create a `docker-compose` file to define our deployments and configuration.
+To bring everything together, let's create a `docker-compose.yml` file to define our deployments and configuration.
 
 ```Dockerfile
 version: '3'
