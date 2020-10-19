@@ -128,14 +128,13 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#architecture">Architecture</a></li>
 <li class="toc-entry toc-h2"><a href="#building-the-docker-images">Building the Docker Images</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#jupyterhub">JupyterHub</a>
+<li class="toc-entry toc-h3"><a href="#dockerfiles">Dockerfiles</a>
 <ul>
-<li class="toc-entry toc-h4"><a href="#docker">Docker</a></li>
 <li class="toc-entry toc-h4"><a href="#docker-compose">Docker Compose</a></li>
-<li class="toc-entry toc-h4"><a href="#stopping-idle-servers">Stopping Idle Servers</a></li>
-<li class="toc-entry toc-h4"><a href="#jupyterhub-config">Jupyterhub Config</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h3"><a href="#stopping-idle-servers">Stopping Idle Servers</a></li>
+<li class="toc-entry toc-h3"><a href="#jupyterhub-config">Jupyterhub Config</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#start-the-server">Start the Server</a>
@@ -182,11 +181,8 @@ window.onload = wrap_img;
 <hr>
 <p>To build our at home JupyterHub server we will use the pre-built Docker images of JupyterHub &amp; JupyterLab.</p>
 
-<h3 id="jupyterhub">
-<a class="anchor" href="#jupyterhub" aria-hidden="true"><span class="octicon octicon-link"></span></a>JupyterHub</h3>
-
-<h4 id="docker">
-<a class="anchor" href="#docker" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker</h4>
+<h3 id="dockerfiles">
+<a class="anchor" href="#dockerfiles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dockerfiles</h3>
 
 <p>The JupyterHub Docker image is simple.</p>
 
@@ -240,8 +236,8 @@ volumes:
 
 <p>For more information on selecting Jupyter images you can visit the following Jupyter <a href="https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html">documentation</a>.</p>
 
-<h4 id="stopping-idle-servers">
-<a class="anchor" href="#stopping-idle-servers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stopping Idle Servers</h4>
+<h3 id="stopping-idle-servers">
+<a class="anchor" href="#stopping-idle-servers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stopping Idle Servers</h3>
 
 <p>Since this is our home setup, we want to be able to stop idle instances to preserve memory on our machine. JupyterHub has services that can run along side itself and one of them is <a href="https://github.com/jupyterhub/jupyterhub-idle-culler">jupyterhub-idle-culler</a>. This service stops any instances that are idle for a prolonged duration.</p>
 
@@ -254,8 +250,8 @@ volumes:
 
 <p>To find out more about services, JupyterHub has official <a href="https://jupyterhub.readthedocs.io/en/stable/reference/services.html">documentation</a> on them.</p>
 
-<h4 id="jupyterhub-config">
-<a class="anchor" href="#jupyterhub-config" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jupyterhub Config</h4>
+<h3 id="jupyterhub-config">
+<a class="anchor" href="#jupyterhub-config" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jupyterhub Config</h3>
 
 <p>To finish off, we need to define configuration options for our JupyterHub instance. For example, volume mounts, Docker images, services, authentication, etc.</p>
 
