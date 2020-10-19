@@ -128,11 +128,8 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#architecture">Architecture</a></li>
 <li class="toc-entry toc-h2"><a href="#building-the-docker-images">Building the Docker Images</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#dockerfiles">Dockerfiles</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#docker-compose">Docker Compose</a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h3"><a href="#dockerfiles">Dockerfiles</a></li>
+<li class="toc-entry toc-h3"><a href="#docker-compose">Docker Compose</a></li>
 <li class="toc-entry toc-h3"><a href="#stopping-idle-servers">Stopping Idle Servers</a></li>
 <li class="toc-entry toc-h3"><a href="#jupyterhub-config">Jupyterhub Config</a></li>
 </ul>
@@ -143,43 +140,37 @@ window.onload = wrap_img;
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#feedback">Feedback</a></li>
-</ul><p>Jupyter Notebooks provide a great platform to produce human-readable documents containing code, equations, analysis their descriptions. Some consider it a powerful tool for development when combining it with NBDev. For such an integral tool, the out of the box start up is not the best.  Each use requires starting the Jupyter web application from the command line and entering your token or password. The entire web application relies on that terminal window being open. Some might “daemonize” the process and then use <a href="https://www.computerhope.com/unix/unohup.htm">nohup</a> to detach it from their terminal, but that’s not the most elegant and maintainable solution.</p>
+</ul><p>Jupyter Notebook provides a great platform to produce human-readable documents containing code, equations, analysis, and their descriptions. Some even consider it a powerful development when combining it with NBDev. For such an integral tool, the out of the box start up is not the best. Each use requires starting the Jupyter web application from the command line and entering your token or password. The entire web application relies on that terminal window being open. Some might “daemonize” the process and then use <a href="https://www.computerhope.com/unix/unohup.htm">nohup</a> to detach it from their terminal, but that’s not the most elegant and maintainable solution.</p>
 
-<p>Lucky for us, Jupyter has already come up with a solution to this problem by coming out with an extension of Jupyter Notebooks that runs as a sustainable web application and has built in user authentication. To add a cherry on top it can be managed and sustained through Docker allowing for isolated development environments.</p>
+<p>Lucky for us, Jupyter has already come up with a solution to this problem by coming out with an extension of Jupyter Notebooks that runs as a sustainable web application and has built-in user authentication. To add a cherry on top, it can be managed and sustained through Docker allowing for isolated development environments.</p>
 
-<p>By the end of this post we will have a Jupyter Notebook instance which can be accessed on command without a terminal, from multiple devices within your network, and a much more user friendly authentication method.</p>
+<p>By the end of this post we will leverage the power of JupyterHub to access a Jupyter Notebook instance which can be accessed without a terminal, from multiple devices within your network, and a more user friendly authentication method.</p>
 
 <h2 id="prerequisites">
 <a class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
 <hr>
-<p>The technical requirements are basic Docker and command line skills.</p>
+<p>A basic knowledge of Docker and the command line would be beneficial in setting this up.</p>
 
-<p>Regarding hardware, I recommend doing this on the most powerful device you have and one that is on for most of the day, preferably all day. One of the benefits of this setup is that you will be able to use the Jupyter Notebook from any device on your network, but have all the computation happen on the device we configure.</p>
+<p>I recommend doing this on the most powerful device you have and one that is turned on for most of the day, preferably all day. One of the benefits of this setup is that you will be able to use Jupyter Notebook from any device on your network, but have all the computation happen on the device we configure.</p>
 
 <h2 id="what-is-jupyter-hub">
 <a class="anchor" href="#what-is-jupyter-hub" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Jupyter Hub</h2>
 <hr>
-<p>JupyterHub brings the power of notebooks to groups of users. The idea behind JupyterHub was to scale out the use of Jupyter Notebooks to enterprises, classrooms, and large groups of users. On the other hand, Jupyter Notebook is supposed to run in a local instance, on a single node, by a single developer. Unfortunately, there was no middle ground to have the usability and scalability of JupyterHub and the simplicity of running a local Jupyter Notebook. That is, until now.</p>
+<p>JupyterHub brings the power of notebooks to groups of users. The idea behind JupyterHub was to scale out the use of Jupyter Notebooks to enterprises, classrooms, and large groups of users. Jupyter Notebook, however, is supposed to run as a local instance, on a single node, by a single developer. Unfortunately, there was no middle ground to have the usability and scalability of JupyterHub and the simplicity of running a local Jupyter Notebook. That is, until now.</p>
 
-<p>JupyterHub has pre-built Docker images that we can utilize to spawn a single notebook on a whim, with little to no overhead in technical complexity. We are going to use the combination of Docker and JupyterHub to access Jupyter Notebooks from anytime, anywhere at the same URL.</p>
+<p>JupyterHub has pre-built Docker images that we can utilize to spawn a single notebook on a whim, with little to no overhead in technical complexity. We are going to use the combination of Docker and JupyterHub to access Jupyter Notebooks from anytime, anywhere, at the same URL.</p>
 
 <h2 id="architecture">
 <a class="anchor" href="#architecture" aria-hidden="true"><span class="octicon octicon-link"></span></a>Architecture</h2>
 <hr>
-<p>At a high level the architecture is not complex and can even scale if you have more than one user you want to set this up for!</p>
-
-<p>1) Type in the IP address or host name of the machine JupyterHub is running on.</p>
-
-<p>2) Authenticate using username &amp; password</p>
-
-<p>3) Start your server &amp; you’re good to go!</p>
+<p>The architecture of our JupyterHub server will consist of 2 services: JupyterHub and JupyterLab. JupyterHub will be the entry point and will spawn JupyterLab instances for any user. Each of these services will exist as a Docker container on the host.</p>
 
 <p><img src="/blog/images/jupyterhub/architecture.png" alt=""></p>
 
 <h2 id="building-the-docker-images">
 <a class="anchor" href="#building-the-docker-images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building the Docker Images</h2>
 <hr>
-<p>To build our at home JupyterHub server we will use the pre-built Docker images of JupyterHub &amp; JupyterLab.</p>
+<p>To build our at-home JupyterHub server we will use the pre-built Docker images of JupyterHub &amp; JupyterLab.</p>
 
 <h3 id="dockerfiles">
 <a class="anchor" href="#dockerfiles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dockerfiles</h3>
@@ -198,10 +189,10 @@ COPY cull_idle_servers.py .
 RUN pip install dockerspawner
 </code></pre>
 
-<p>We use the pre-built JupyterHub Docker Image but then add our own configuration file along side code to stop idle servers, <code class="language-plaintext highlighter-rouge">cull_idle_servers.py</code>. Lastly, we install additional packages to spawn JupyterLab instances via Docker.</p>
+<p>We use the pre-built JupyterHub Docker Image and add our own configuration file to stop idle servers, <code class="language-plaintext highlighter-rouge">cull_idle_servers.py</code>. Lastly, we install additional packages to spawn JupyterLab instances via Docker.</p>
 
-<h4 id="docker-compose">
-<a class="anchor" href="#docker-compose" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker Compose</h4>
+<h3 id="docker-compose">
+<a class="anchor" href="#docker-compose" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker Compose</h3>
 
 <p>To bring everything together, let’s create a <code class="language-plaintext highlighter-rouge">docker-compose</code> file to define our deployments and configuration.</p>
 
@@ -239,23 +230,23 @@ volumes:
 <h3 id="stopping-idle-servers">
 <a class="anchor" href="#stopping-idle-servers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stopping Idle Servers</h3>
 
-<p>Since this is our home setup, we want to be able to stop idle instances to preserve memory on our machine. JupyterHub has services that can run along side itself and one of them is <a href="https://github.com/jupyterhub/jupyterhub-idle-culler">jupyterhub-idle-culler</a>. This service stops any instances that are idle for a prolonged duration.</p>
+<p>Since this is our home setup, we want to be able to stop idle instances to preserve memory on our machine. JupyterHub has services that can run along side it and one of them being <a href="https://github.com/jupyterhub/jupyterhub-idle-culler">jupyterhub-idle-culler</a>. This service stops any instances that are idle for a prolonged duration.</p>
 
-<p>Create a new file called <code class="language-plaintext highlighter-rouge">cull_idle_servers.py</code> and copy the contents of this file from the <a href="https://raw.githubusercontent.com/jupyterhub/jupyterhub-idle-culler/master/jupyterhub_idle_culler/__init__.py">jupyterhub-idle-culler project</a> into it.</p>
+<p>To add this servive, create a new file called <code class="language-plaintext highlighter-rouge">cull_idle_servers.py</code> and copy the contents of <a href="https://raw.githubusercontent.com/jupyterhub/jupyterhub-idle-culler/master/jupyterhub_idle_culler/__init__.py">jupyterhub-idle-culler project</a> into it.</p>
 
 <div class="Toast" style="max-width: 1200px;">
    <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
    <span class="Toast-content">Ensure `cull_idle_servers.py` is in the same folder as the Dockerfile.</span>
 </div>
 
-<p>To find out more about services, JupyterHub has official <a href="https://jupyterhub.readthedocs.io/en/stable/reference/services.html">documentation</a> on them.</p>
+<p>To find out more about JupyterHub services, check out their official <a href="https://jupyterhub.readthedocs.io/en/stable/reference/services.html">documentation</a> on them.</p>
 
 <h3 id="jupyterhub-config">
 <a class="anchor" href="#jupyterhub-config" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jupyterhub Config</h3>
 
-<p>To finish off, we need to define configuration options for our JupyterHub instance. For example, volume mounts, Docker images, services, authentication, etc.</p>
+<p>To finish off, we need to define configuration options such, volume mounts, Docker images, services, authentication, etc. for our JupyterHub instance.</p>
 
-<p>Below is a simple configuration I use that gets the job done.</p>
+<p>Below is a simple configuration file I use.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -285,7 +276,7 @@ volumes:
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>The configuration options you want to take note of and change are the following:</p>
+<p>Take note of the following configuration options:</p>
 
 <ul>
   <li>
@@ -295,19 +286,21 @@ volumes:
     <p><code class="language-plaintext highlighter-rouge">c.Spawner.default_url = '/lab'</code>: Uses Jupyterlab instead of Jupyter Notebook. Comment out this line to use Jupyter Notebook.</p>
   </li>
   <li>
-    <p><code class="language-plaintext highlighter-rouge">'/home/sidhu': '/home/jovyan/work'</code>: I mounted my home directory to the Jupyter home directory to have access to any projects and notebooks I have on my Desktop already. This also allows us to achieve persistence in the case we create new notebooks, they are saved to our local machine and will not get deleted if our Jupyter Notebook Docker container deleted. <strong>Remove this line if you do not wish to mount your home directory and do not forget to change <code class="language-plaintext highlighter-rouge">sidhu</code> to your user name</strong>.</p>
+    <p><code class="language-plaintext highlighter-rouge">'/home/sidhu': '/home/jovyan/work'</code>: I mounted my home directory to the JupyterLab home directory to have access to any projects and notebooks I have on my Desktop. This also allows us to achieve persistence in the case we create new notebooks, they are saved to our local machine and will not get deleted if our Jupyter Notebook Docker container is deleted.</p>
   </li>
 </ul>
+
+<p><strong>Remove this line if you do not wish to mount your home directory and do not forget to change <code class="language-plaintext highlighter-rouge">sidhu</code> to your user name</strong>.</p>
 
 <h2 id="start-the-server">
 <a class="anchor" href="#start-the-server" aria-hidden="true"><span class="octicon octicon-link"></span></a>Start the Server</h2>
 <hr>
 
-<p>To start the server, simply run <code class="language-plaintext highlighter-rouge">docker-compose up -d</code> - navigate to <code class="language-plaintext highlighter-rouge">localhost:8080</code> in your browser and you should be able to see the JupyterHub landing page.</p>
+<p>To start the server, simply run <code class="language-plaintext highlighter-rouge">docker-compose up -d</code>, navigate to <code class="language-plaintext highlighter-rouge">localhost:8080</code> in your browser and you should be able to see the JupyterHub landing page.</p>
 
 <p><img src="/blog/images/jupyterhub/landingpage.png" alt=""></p>
 
-<p>To access it on other devices on your network - a laptop, an iPad, etc, first identify the IP of the host machine by running <code class="language-plaintext highlighter-rouge">ifconfig</code> on Unix machines &amp; <code class="language-plaintext highlighter-rouge">ipconfig</code> on windows.</p>
+<p>To access it on other devices on your network such asva laptop, an iPad, etc, identify the IP of the host machine by running <code class="language-plaintext highlighter-rouge">ifconfig</code> on Unix machines &amp; <code class="language-plaintext highlighter-rouge">ipconfig</code> on Windows.</p>
 
 <p><img src="/blog/images/jupyterhub/ifconfig.png" alt=""></p>
 
@@ -316,7 +309,9 @@ volumes:
 <h3 id="authenticating">
 <a class="anchor" href="#authenticating" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authenticating</h3>
 
-<p>That leaves us with the last task of authenticating to the server. Since we did not set up a LDAP server or OAuth, JupyterHub will use PAM (Pluggable Authentication Module) authentication to authenticate users. In English, JupyterHub uses the user name and passwords of of the host machine to authenticate. To make use of this, we are going to have to create a user on the JupyterLab Docker container. There are other ways of doing this such as having a script placed on the container and executed at container start up but we will do it manually as an exercise. It should be noted that if you tear down or rebuild the container that you will have to repeat this process, so an exercise to automate this process or switch to a different authentication method would be invaluable.</p>
+<p>That leaves us with the last task of authenticating to the server. Since we did not set up a LDAP server or OAuth, JupyterHub will use PAM (Pluggable Authentication Module) authentication to authenticate users. This means JupyterHub uses the user name and passwords of the host machine to authenticate.</p>
+
+<p>To make use of this, we will have to create a user on the JupyterHub Docker container. There are other ways of doing this such as having a script placed on the container and executed at container start up but we will do it manually as an exercise. If you tear down or rebuild the container you will have to recreate users.</p>
 
 <div class="Toast Toast--warning googoo" style="max-width: 1200px;">
    <span class="Toast-icon"><svg class="octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path></svg></span>
@@ -334,6 +329,8 @@ volumes:
 <p>4) Sign in with the credentials and you’re all set!</p>
 
 <p><img src="/blog/images/jupyterhub/jupyterlab.png" alt=""></p>
+
+<p>You now have a ready to go Jupyter Notebook server that can be accessed from any device, in the palm of your hands! Happy Coding!</p>
 
 <h2 id="feedback">
 <a class="anchor" href="#feedback" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feedback</h2>
