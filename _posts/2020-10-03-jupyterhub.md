@@ -1,9 +1,10 @@
 ---
 toc: true
+layout: post
 description: "Run your Jupyter Notebook as a stand alone web app."
 categories: [markdown, data science, jupyter, ml]
 comments: true
-image: images/jupyterhub/hublogo.jpg
+image: images/jupyterhub/hublogo.svg
 title: "Tutorial: Stop Running Jupyter Notebooks from your Command Line!"
 ---
 
@@ -35,7 +36,7 @@ At a high level the architecture is not complex and can even scale if you have m
 
 3) Start your server & you're good to go!
 
-![]({{ site.baseurl }}/images/jupyterhub/architecture.svg)
+![]({{ site.baseurl }}/images/jupyterhub/architecture.png)
 
 ## Building the Docker Images
 ---
