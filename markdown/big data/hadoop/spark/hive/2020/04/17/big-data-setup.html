@@ -4,7 +4,7 @@
 
 <p><em>Edit</em>: Thanks to <a href="https://medium.com/@dvillaj">@Daniel Villanueva</a> you can now deploy a VM with Hadoop, Spark and Hive pre-configured and ready to go through his Vagrant image. You can check it out on his Github <a href="https://github.com/dvillaj/spark-box">here</a>.</p>
 
-<div class="Toast">
+<div class="Toast" style="max-width: 1200px;">
    <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
    <span class="Toast-content">This tutorial is not for an industry production installation!</span>
 </div>
@@ -30,7 +30,7 @@
 
 <p>Hive is slow and generally used for batch jobs only. A much faster version of Hive would be something like Impala, but for home use - it gets the job done. You can download the latest version of Hive <a href="https://downloads.apache.org/hive/hive-3.1.2/">here</a>.</p>
 
-<div class="Toast">
+<div class="Toast" style="max-width: 1200px;">
    <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
    <span class="Toast-content">Make sure you download the binary (bin) version and not the source (src) version!</span>
 </div>
@@ -456,7 +456,7 @@ Replace <code class="language-plaintext highlighter-rouge">PW_FOR_HIVE</code> wi
 
 <p>Spark is a general-purpose distributed data processing engine that is suitable for use in a wide range of circumstances. On top of the Spark core data processing engine, there are libraries for SQL, machine learning, graph computation, and stream processing, which can be used together in an application. In this tutorial we’re going to setup a standalone Spark cluster using Docker and have it be able to spin up any number of workers. This reasoning behind this is we want to simulate a remote cluster and some of the configuration required for it.</p>
 
-<div class="Toast">
+<div class="Toast" style="max-width: 1200px;">
    <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
    <span class="Toast-content">In a production setting, Spark is usually going to be configured to use Yarn and the resources already allocated for Hadoop.</span>
 </div>
@@ -572,7 +572,7 @@ docker-compose up <span class="nt">-d</span> <span class="nt">--scale</span> spa
 <span class="nb">export </span><span class="nv">PYSPARK_PYTHON</span><span class="o">=</span>python3
 </code></pre></div></div>
 
-<div class="Toast">
+<div class="Toast" style="max-width: 1200px;">
    <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
    <span class="Toast-content">If you prefer Jupyter Lab, change 'notebook', to 'lab' for PYSPARK_DRIVER_PYTHON_OPTS.</span>
 </div>
