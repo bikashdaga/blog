@@ -3,7 +3,6 @@ toc: true
 layout: post
 description: "Run your Jupyter Notebook as a stand alone web app."
 categories: [markdown, data science, jupyter, ml]
-comments: true
 image: images/jupyterhub/hublogo.svg
 title: "Tutorial: Stop Running Jupyter Notebooks from your Command Line!"
 ---
