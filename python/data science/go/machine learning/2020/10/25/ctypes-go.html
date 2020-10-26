@@ -128,24 +128,24 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#walk-through">Walk Through</a></li>
 <li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
 <li class="toc-entry toc-h2"><a href="#feedback">Feedback</a></li>
-</ul><p>Python - a programming language that is human readable, easy to learn, and most importantly, easy to use. It is no wonder that it is one of the most popular languages today. From being able to build web applications, create automation scripts, analyze data and build machine learning algorithms, Python is a jack of all trades. As with anything it has its short comings and a couple of them being is its speed and granular access to machine hardware. This is due to Python being an interpreter based language and not a compiler based language.</p>
+</ul><p>Python - a programming language that is human readable, easy to learn, and most importantly, easy to use. It is no wonder that it is one of the most popular languages today. From being able to build web applications, create automation scripts, analyze data and build machine learning models, Python is a jack of all trades. As with anything it has its short comings which include its speed and lack of granular access to machine hardware. This is due to Python being an interpreter-based language and not a compiler-based language.</p>
 
-<p>Luckily for us, Python has a way to solve that problem. It has a built in library that allows you to use functions and libraries built in compiled languages. It gives you the power to leverage both the powers of Python and compiler based languages. Some of the most popular data science libraries such as <a href="https://github.com/pandas-dev/pandas/tree/7829ad3290dc6894d24c1c853ffc4dabef50294a/pandas/_libs/src">Pandas</a> and <a href="https://github.com/dmlc/xgboost/tree/master/src">XGBoost</a> have modules written in C++ (a compiler based language) to achieve better speed &amp; performance while still having a user friendly Python API for everyone to use.</p>
+<p>Luckily for us, there is a way to solve that problem. Python has a native library that allows you to use functions built in compiled languages. This gives you the ability to leverage both the powers of Python and compiler based languages. Some of the most popular data science libraries such as <a href="https://github.com/pandas-dev/pandas/tree/7829ad3290dc6894d24c1c853ffc4dabef50294a/pandas/_libs/src">Pandas</a> and <a href="https://github.com/dmlc/xgboost/tree/master/src">XGBoost</a> have modules written in C/C++ (compiler-based languages) to overcome Python’s speed and performance issues while still having a user friendly Python API.</p>
 
 <p>In this post, we are going to walk through interpreter based languages vs. compiler based languages, Python’s built in <code class="language-plaintext highlighter-rouge">ctypes</code> module and an example of how to use modules built from a compiled language. From there you will be able to integrate Python with other languages in your data science or machine learning projects.</p>
 
 <h2 id="interpreters-vs-compilers">
 <a class="anchor" href="#interpreters-vs-compilers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Interpreters vs. Compilers</h2>
-<p>As I mentioned above, Python is an interpreted language. To go from the code you write to execution on a machine, the code first has to get translated to “machine code”.</p>
+<p>As I mentioned above, Python is an interpreted language. In order to execute code on a machine, the code first has to get translated to “machine code”.</p>
 
 <div class="Toast" style="max-width: 1200px;">
    <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
-   <span class="Toast-content">Machine code is just binary or hexadecimal instructions. </span>
+   <span class="Toast-content">Machine code is just binary or hexadecimal instructions.</span>
 </div>
 
-<p>The main difference is that interpreted languages get executed line by line and passed through a translator that converts each line to machine code.</p>
+<p>The main difference between interpreted and compiled languages is that interpreted languages get executed line by line and passed through a translator that converts each line to machine code.</p>
 
-<p>Compilers, on the other hand, require a build step that translates all the code at once into an application ( or binary ) that can be executed. During the build phase there is a compiler that will optimize the translation from the code that is written to machine code. Common compiled languages are C, C++ and Go.</p>
+<p>Compilers require a build step that translates all the code at once into an application (or binary) that can be executed. During the build phase there is a compiler that will optimize the translation from written code to machine code. The compiler’s optimizations are one of compiled based-languages are faster than interpreter-based languages. Common compiled languages are C, C++ and Go.</p>
 
 <div class="Toast" style="max-width: 1200px;">
    <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
@@ -156,18 +156,18 @@ window.onload = wrap_img;
 <a class="anchor" href="#c-types" aria-hidden="true"><span class="octicon octicon-link"></span></a>C Types</h2>
 <p>Python has built in libraries to be able to call modules built in compiled languages. It gives developers the ultimate flexibility to use compiled languages for tasks that Python isn’t well equipped to handle - all the while still building the core of the application in Python.</p>
 
-<p>The main library that we will be using to interact with modules from a compiled application is  <a href="https://docs.python.org/3/library/ctypes.html">ctypes.</a>  It provides C compatible data types and calling functions from applications built in compiled languages. It gives you the ability to wrap these languages in pure Python. To be able to do this, Python first has to convert its function argument types into C native types. This allows it to be compatible with compiled language functions argument types. The figure below explains the process at a high level when interacting with functions from compiled languages.</p>
+<p>The main library that we will be using to interact with modules from a compiled application is  <a href="https://docs.python.org/3/library/ctypes.html">ctypes.</a>  It provides C compatible data types and calling functions from applications built in compiled languages. It gives you the ability to wrap these languages in pure Python. To be able to do this, Python first has to convert its function argument types into C native types. This allows it to be compatible with compiled language function’s argument types. The figure below explains the process at a high level when interacting with functions from compiled languages.</p>
 
 <div class="Toast" style="max-width: 1200px;">
    <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
-   <span class="Toast-content">The example in the next section will be using Go so the image is Go specific, but the principle applies to the other compiled languages. </span>
+   <span class="Toast-content">The example in the next section will be using Go so the image is Go specific, but the principle applies to the other compiled languages.</span>
 </div>
 
 <p><img src="/blog/images/ctypes/architecture.png" alt=""></p>
 
 <h2 id="walk-through">
 <a class="anchor" href="#walk-through" aria-hidden="true"><span class="octicon octicon-link"></span></a>Walk Through</h2>
-<p>Below is a Go function that I wrote that gets the closing price of a stock using the Alpha Vantage API. I’ll go over the key lines that allow us to create a Python wrapper for it.</p>
+<p>Below is a Go function I wrote that gets the closing price of a stock using the Alpha Vantage API. I’ll go over the key lines that allow us to create a Python wrapper for it.</p>
 
 <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
 
@@ -304,7 +304,7 @@ window.onload = wrap_img;
 
 <h2 id="conclusion">
 <a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
-<p>You now have most of the knowledge you need to get started writing creating wrappers for compiled language functions. No longer are you bound by the some of the cons of interpreter based languages. You can create modules in languages that better suit your use case, and then fall back on Python to build out a user friendly API or the core of your application. Happy coding!</p>
+<p>You now have most of the knowledge you need to get started creating wrappers for compiled language functions. No longer are you bound by the cons of interpreter based languages. You can create modules in languages that better suit your use case, and then fall back on Python to build out a user friendly API or the core of your application. Happy coding!</p>
 
 <h2 id="feedback">
 <a class="anchor" href="#feedback" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feedback</h2>
