@@ -1,0 +1,186 @@
+<hr />
+<p>toc: true
+layout: post
+description: “Create a Python wrapper for functions written in Go.”
+categories: [python, data science, go, machine learning]
+image: images_ctypes_intro.png
+title: “Tutorial: Integrating Python with Compiler Languages”</p>
+<hr />
+
+<p>Python - a programming language that is human readable, easy to learn, and most importantly, easy to use. It is no wonder that it is one of the most popular languages today. From being able to build web applications, create automation scripts, analyze data and build machine learning algorithms, Python is a jack of all trades. As with anything it has its short comings and a couple of them being is its speed and granular access to machine hardware. This is due to Python being an interpreter based language and not a compiler based language.</p>
+
+<p>Luckily for us, Python has a way to solve that problem. It has a built in library that allows you to use functions and libraries built in compiled languages. It gives you the power to leverage both the powers of Python and compiler based languages. Some of the most popular data science libraries such as <a href="https://github.com/pandas-dev/pandas/tree/7829ad3290dc6894d24c1c853ffc4dabef50294a/pandas/_libs/src">Pandas</a> and <a href="https://github.com/dmlc/xgboost/tree/master/src">XGBoost</a> have modules written in C++ (a compiler based language) to achieve better speed &amp; performance while still having a user friendly Python API for everyone to use.</p>
+
+<p>In this post, we are going to walk through interpreter based languages vs. compiler based languages, Python’s built in <code class="language-plaintext highlighter-rouge">ctypes</code> module and an example of how to use modules built from a compiled language. From there you will be able to integrate Python with other languages in your data science or machine learning projects.</p>
+
+<h2 id="interpreters-vs-compilers">Interpreters vs. Compilers</h2>
+<p>As I mentioned above, Python is an interpreted language. To go from the code you write to execution on a machine, the code first has to get translated to “machine code”.</p>
+
+<div class="Toast" style="max-width: 1200px;">
+   <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
+   <span class="Toast-content">Machine code is just binary or hexadecimal instructions. </span>
+</div>
+
+<p>The main difference is that interpreted languages get executed line by line and passed through a translator that converts each line to machine code.</p>
+
+<p>Compilers, on the other hand, require a build step that translates all the code at once into an application ( or binary ) that can be executed. During the build phase there is a compiler that will optimize the translation from the code that is written to machine code. Common compiled languages are C, C++ and Go.</p>
+
+<div class="Toast" style="max-width: 1200px;">
+   <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
+   <span class="Toast-content">This a high level comparison between interpreters and compilers. More in-depth knowledge would require individual research or a separate topic entirely.</span>
+</div>
+
+<h2 id="c-types">C Types</h2>
+<p>Python has built in libraries to be able to call modules built in compiled languages. It gives developers the ultimate flexibility to use compiled languages for tasks that Python isn’t well equipped to handle - all the while still building the core of the application in Python.</p>
+
+<p>The main library that we will be using to interact with modules from a compiled application is  <a href="https://docs.python.org/3/library/ctypes.html">ctypes.</a>  It provides C compatible data types and calling functions from applications built in compiled languages. It gives you the ability to wrap these languages in pure Python. To be able to do this, Python first has to convert its function argument types into C native types. This allows it to be compatible with compiled language functions argument types. The figure below explains the process at a high level when interacting with functions from compiled languages.</p>
+
+<div class="Toast" style="max-width: 1200px;">
+   <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
+   <span class="Toast-content">The example in the next section will be using Go so the image is Go specific, but the principle applies to the other compiled languages. </span>
+</div>
+
+<p><img src="/blog/images/ctypes/architecture.png" alt="" /></p>
+
+<h2 id="walk-through">Walk Through</h2>
+<p>Below is a Go function that I wrote that gets the closing price of a stock using the Alpha Vantage API. I’ll go over the key lines that allow us to create a Python wrapper for it.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"C"</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"encoding/json"</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"io/ioutil"</span>
+	<span class="s">"log"</span>
+	<span class="s">"net/http"</span>
+	<span class="s">"os"</span>
+	<span class="s">"time"</span>
+<span class="p">)</span>
+
+<span class="c">// APIKEY ... Alpha Vantage API key, stored as env variable</span>
+<span class="k">var</span> <span class="n">APIKEY</span> <span class="kt">string</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">Getenv</span><span class="p">(</span><span class="s">"ALPHA_API_KEY"</span><span class="p">)</span>
+
+<span class="c">// ENDPOINT ... Alpha Vantage API daily stock data endpoint</span>
+<span class="k">var</span> <span class="n">ENDPOINT</span> <span class="kt">string</span> <span class="o">=</span> <span class="s">"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED"</span>
+
+<span class="c">// Data ... Data structure</span>
+<span class="k">type</span> <span class="n">Data</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">MetaData</span>   <span class="n">MetaData</span>               <span class="s">`json:"Meta Data"`</span>
+	<span class="n">TimeSeries</span> <span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}</span> <span class="s">`json:"Time Series (Daily)"`</span>
+<span class="p">}</span>
+
+<span class="c">// MetaData ... Stock metadata structure</span>
+<span class="k">type</span> <span class="n">MetaData</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">Info</span>        <span class="kt">string</span> <span class="s">`json:"1. Information"`</span>
+	<span class="n">Symbol</span>      <span class="kt">string</span> <span class="s">`json:"2. Symbol"`</span>
+	<span class="n">LastRefresh</span> <span class="kt">string</span> <span class="s">`json:"3. Last Refreshed"`</span>
+	<span class="n">OutputSize</span>  <span class="kt">string</span> <span class="s">`json:"4. Output Size"`</span>
+	<span class="n">TimeZone</span>    <span class="kt">string</span> <span class="s">`json:"5. Time Zone"`</span>
+<span class="p">}</span>
+
+<span class="c">// FinData ... Daily Financial Data json structure</span>
+<span class="k">type</span> <span class="n">FinData</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">Open</span>       <span class="kt">string</span> <span class="s">`json:"1. open"`</span>
+	<span class="n">High</span>       <span class="kt">string</span> <span class="s">`json:"2. high"`</span>
+	<span class="n">Low</span>        <span class="kt">string</span> <span class="s">`json:"3. low"`</span>
+	<span class="n">Close</span>      <span class="kt">string</span> <span class="s">`json:"4. close"`</span>
+	<span class="n">AdjClose</span>   <span class="kt">string</span> <span class="s">`json:"5. adjusted close"`</span>
+	<span class="n">Volume</span>     <span class="kt">string</span> <span class="s">`json:"6. volume"`</span>
+	<span class="n">DivAmount</span>  <span class="kt">string</span> <span class="s">`json:"7. dividend amount"`</span>
+	<span class="n">SplitCoeff</span> <span class="kt">string</span> <span class="s">`json:"8. split coefficient"`</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{}</span>
+
+<span class="c">//export getPrice</span>
+<span class="k">func</span> <span class="n">getPrice</span><span class="p">(</span><span class="n">ticker</span> <span class="o">*</span><span class="n">C</span><span class="o">.</span><span class="n">char</span><span class="p">,</span> <span class="n">date</span> <span class="o">*</span><span class="n">C</span><span class="o">.</span><span class="n">char</span><span class="p">)</span> <span class="o">*</span><span class="n">C</span><span class="o">.</span><span class="n">char</span> <span class="p">{</span>
+
+	<span class="n">tickerDate</span> <span class="o">:=</span> <span class="n">C</span><span class="o">.</span><span class="n">GoString</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+	<span class="n">stock</span> <span class="o">:=</span> <span class="n">C</span><span class="o">.</span><span class="n">GoString</span><span class="p">(</span><span class="n">ticker</span><span class="p">)</span>
+
+	<span class="n">query</span> <span class="o">:=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"%s&amp;symbol=%s&amp;apikey=%s"</span><span class="p">,</span> <span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">stock</span><span class="p">,</span> <span class="n">APIKEY</span><span class="p">)</span>
+
+	<span class="n">client</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">Client</span><span class="p">{</span>
+		<span class="n">Timeout</span><span class="o">:</span> <span class="n">time</span><span class="o">.</span><span class="n">Second</span> <span class="o">*</span> <span class="m">10</span><span class="p">,</span> <span class="c">// Timeout after 5 seconds</span>
+	<span class="p">}</span>
+
+	<span class="n">req</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequest</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">MethodGet</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="no">nil</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"User-Agent"</span><span class="p">,</span> <span class="s">"stock-api-project"</span><span class="p">)</span>
+
+	<span class="n">resp</span><span class="p">,</span> <span class="n">getErr</span> <span class="o">:=</span> <span class="n">client</span><span class="o">.</span><span class="n">Do</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">getErr</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">getErr</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">defer</span> <span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+
+	<span class="n">respBody</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">ioutil</span><span class="o">.</span><span class="n">ReadAll</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span>
+
+	<span class="n">dailyData</span> <span class="o">:=</span> <span class="n">Data</span><span class="p">{}</span>
+	<span class="n">json</span><span class="o">.</span><span class="n">Unmarshal</span><span class="p">(</span><span class="n">respBody</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dailyData</span><span class="p">)</span>
+
+	<span class="c">// Encode Interface as bytes</span>
+	<span class="n">dailyFinDataMap</span> <span class="o">:=</span> <span class="n">dailyData</span><span class="o">.</span><span class="n">TimeSeries</span><span class="p">[</span><span class="n">tickerDate</span><span class="p">]</span>
+	<span class="n">dfdByte</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">json</span><span class="o">.</span><span class="n">Marshal</span><span class="p">(</span><span class="n">dailyFinDataMap</span><span class="p">)</span>
+
+	<span class="c">// Map interface to FinData struct</span>
+	<span class="n">dailyFinData</span> <span class="o">:=</span> <span class="n">FinData</span><span class="p">{}</span>
+	<span class="n">json</span><span class="o">.</span><span class="n">Unmarshal</span><span class="p">(</span><span class="n">dfdByte</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dailyFinData</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">C</span><span class="o">.</span><span class="n">CString</span><span class="p">(</span><span class="n">dailyFinData</span><span class="o">.</span><span class="n">AdjClose</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">import “C”</code> - Import the <code class="language-plaintext highlighter-rouge">C</code> package (aka cgo) to have access to C data types.</p>
+
+<p><code class="language-plaintext highlighter-rouge">func main() {}</code> -  An empty main function to ensure we still have an executable.</p>
+
+<p><code class="language-plaintext highlighter-rouge">//export getPrice</code> - Export the function so that we can expose it to be accessed by Python.</p>
+
+<p><code class="language-plaintext highlighter-rouge">func getPrice(ticker *C.char, date *C.char) *C.char {</code> - The function arguments need to be C types.</p>
+
+<p><code class="language-plaintext highlighter-rouge">tickerDate := C.GoString(date)</code> - Convert the function arguments to their native Go types.</p>
+
+<p><code class="language-plaintext highlighter-rouge">return C.CString(dailyFinData.AdjClose)</code> - The return value has to be a native C type.</p>
+
+<p>To be able to use this in Python we have to compile this program, <code class="language-plaintext highlighter-rouge">go build -o stock-api.so -buildmode=c-shared main.go</code></p>
+
+<p>Below is the associating Python wrapper that calls our exported Go function <code class="language-plaintext highlighter-rouge">getPrice</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">get_price</span><span class="p">(</span><span class="n">ticker</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="s">"""Gets the adjusted closing price of all stocks."""</span>
+
+    <span class="n">lib</span> <span class="o">=</span> <span class="n">cdll</span><span class="p">.</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s">"./stock-api.so"</span><span class="p">)</span>
+    <span class="n">lib</span><span class="p">.</span><span class="n">getPrice</span><span class="p">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">c_char_p</span><span class="p">,</span> <span class="n">c_char_p</span><span class="p">]</span>
+    <span class="n">lib</span><span class="p">.</span><span class="n">getPrice</span><span class="p">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">c_char_p</span>
+
+    <span class="n">curr_date</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">date</span><span class="p">.</span><span class="n">today</span><span class="p">())</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="n">lib</span><span class="p">.</span><span class="n">getPrice</span><span class="p">(</span><span class="n">ticker</span><span class="p">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">curr_date</span><span class="p">.</span><span class="n">encode</span><span class="p">()).</span><span class="n">decode</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">price</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">from ctypes import *</code> - Import everything from ctypes as per the documentation.</p>
+
+<p><code class="language-plaintext highlighter-rouge">lib = cdll.LoadLibrary("./stock-api.so")</code> - Load in the binary or compiled application.</p>
+
+<p><code class="language-plaintext highlighter-rouge">lib.getPrice.argtypes = [c_char_p, c_char_p]</code> - Set the <code class="language-plaintext highlighter-rouge">getPrice</code> function argument types to the corresponding C types.</p>
+
+<p><code class="language-plaintext highlighter-rouge">lib.getPrice.restype = c_char_p</code> - Set the return type to the corresponding C type.</p>
+
+<p><code class="language-plaintext highlighter-rouge">price = lib.getPrice(ticker.encode(), curr_date.encode()).decode()</code> - We call the <code class="language-plaintext highlighter-rouge">getPrice</code> function and convert the Python string arguments into bytes that can be passed to the Go function by calling <code class="language-plaintext highlighter-rouge">.encode</code>. We then receive the output from Go function as bytes so we <code class="language-plaintext highlighter-rouge">decode</code> it to convert it to a Python string.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>You now have most of the knowledge you need to get started writing creating wrappers for compiled language functions. No longer are you bound by the some of the cons of interpreter based languages. You can create modules in languages that better suit your use case, and then fall back on Python to build out a user friendly API or the core of your application. Happy coding!</p>
+
+<h2 id="feedback">Feedback</h2>
+<p>I encourage any and all feedback about any of my posts and tutorials. You can message me on  <a href="https://twitter.com/ashtonasidhu">twitter</a>  or e-mail me at  <a href="mailto:sidhuashton@gmail.com">sidhuashton@gmail.com</a> .</p>
+
