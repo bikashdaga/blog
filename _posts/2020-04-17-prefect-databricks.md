@@ -17,9 +17,17 @@ Databricks has become such an integral big data ETL tool, one that I use everyda
 There is no prior knowledge needed for this post but however to follow along with the example and do it yourself you will need a free [Prefect Cloud]()() account.
 
 ## Prefect Basics
-### What is a Flow
+### Tasks
 
-### What is a Task
+A task in Prefect is the equivalent of a step in your data pipeline. It is as simple as a Python function in your application or script. There are no restrictions on how simple or complex tasks can be. That being said, it's best to follow coding best practices and develop your functions so they only do one thing. Prefect themselves also recommend this.
+
+> In general, we encourage "small tasks" over monolithic ones: each task should perform a discrete logical step of your workflow, but not more. [3]
+
+By keeping tasks small, you will get the most out of Prefect's engine such as efficient state checkpoints.
+
+### Flows
+
+A flow is what ties all your tasks and their dependencies together. It describes dependencies between tasks, their order and data flow. Flows pulls together your tasks and makes it into a pipeline rounding our your data application.
 
 ## Native Databricks Integration in Prefect
 I made a contribution to this project by the implementing Prefect tasks  called TODO: insert Databricks task names here enabling seamless integration between Prefect and Databricks. Through these tasks we can externally trigger notebooks and run Spark jobs. Once a task has been executed it uses Databricks native API calls to run notebooks or Spark Jobs. When the task is running It will continue to poll the current status of the run until it’s completed. Once a task is completed it will allow for downstream tasks to run if it is successful.
@@ -28,7 +36,7 @@ I made a contribution to this project by the implementing Prefect tasks  called 
 TODO: Example create sample Prefect Flow
 
 ## Conclusion
-You now have all the knowledge you need to run Databricks Notebooks and Spark jobs as part of your ETL flows. For more information on Prefect and Databricks jobs, I recommend reading their documentation found [here][3] and [here]()().
+You now have all the knowledge you need to run Databricks Notebooks and Spark jobs as part of your ETL flows. For more information on Prefect and Databricks jobs, I recommend reading their documentation found [here][1] and [here]()().
 
 ## Feedback
 As always, I encourage any feedback about my post. You can e-mail me at sidhuashton@gmail.com or leave a comment on the post if you have any questions or need any help.
@@ -37,9 +45,10 @@ You can also reach me and follow me on Twitter at [@ashtonasidhu][5].
 
 ## References
 
-1. [Prefect Documentation][6]
+[1]:	https://docs.prefect.io/core/ "Prefect Documentation"
+[3]: https://docs.prefect.io/core/getting_started/first-steps.html	"Prefect Getting Started"
 
 
-[3]:	https://docs.prefect.io/core/ "Prefect Documentation"
+
 [5]:	https://twitter.com/ashtonasidhu
 [6]:	https://docs.prefect.io/core/ "Prefect Documentation"
