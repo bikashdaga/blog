@@ -30,7 +30,7 @@ By keeping tasks small, you will get the most out of Prefect's engine such as ef
 A flow is what ties all your tasks and their dependencies together. It describes dependencies between tasks, their order and data flow. Flows pulls together your tasks and makes it into a pipeline rounding our your data application.
 
 ## Native Databricks Integration in Prefect
-I made a contribution to this project by the implementing Prefect tasks  called TODO: insert Databricks task names here enabling seamless integration between Prefect and Databricks. Through these tasks we can externally trigger notebooks and run Spark jobs. Once a task has been executed it uses Databricks native API calls to run notebooks or Spark Jobs. When the task is running It will continue to poll the current status of the run until it’s completed. Once a task is completed it will allow for downstream tasks to run if it is successful.
+I made a contribution to this project by the implementing Prefect tasks `DatabricksRunNow` & `DatabricksRunSubmit` enabling seamless integration between Prefect and Databricks. Through these tasks we can externally trigger notebooks and run Spark jobs. Once a task has been executed it uses Databricks native API calls to run notebooks or Spark Jobs. When the task is running It will continue to poll the current status of the run until it’s completed. Once a task is completed it will allow for downstream tasks to run if it is successful.
 
 ## Example
 TODO: Example create sample Prefect Flow
