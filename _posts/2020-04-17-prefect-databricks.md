@@ -21,7 +21,7 @@ There is no prior knowledge needed for this post but however to follow along wit
 
 A task in Prefect is the equivalent of a step in your data pipeline. It is as simple as a Python function in your application or script. There are no restrictions on how simple or complex tasks can be. That being said, it's best to follow coding best practices and develop your functions, so they only do one thing. Prefect themselves also recommend this.
 
-{% include info.html text="In general, we encourage "small tasks" over monolithic ones: each task should perform a discrete logical step of your workflow, but not more. [2]" %}
+{% include info.html text="In general, we encourage "small tasks" over monolithic ones, each task should perform a discrete logical step of your workflow, but not more." %}
 
 By keeping tasks small, you will get the most out of Prefect's engine such as efficient state checkpoints.
 
