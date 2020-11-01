@@ -1,13 +1,13 @@
 ---
 toc: true
 description: "Using Databricks & Prefect to automate your ETL tasks"
-categories: [prefect, databricks, etl, spark]
+categories: [Prefect, Databricks, ETL, Tutorial, Guide, Spark]
 comments: true
 image: images/prefect\_databricks/intro.jpg
 title: "Tutorial: Integrating Prefect & Databricks"
 ---
 
-Prefect is a workflow management system that enables you to easily take your data applications and add retries, logging, dynamic mapping, caching, failure notifications, scheduling and more — all with functional Python API. Prefect allows you to take your existing code, and with some small edits, transform it into a DAG (Directed Acyclic Graph) with dependencies already identified [1][1]. It simplifies the creation of ETL pipelines and dependencies and enables you to strictly focus on the application code instead of the pipeline code (looking at you Airflow). Prefect even enables you to create distributed pipelines to parallelize your data applications.
+Prefect is a workflow management system that enables you to easily take your data applications and add retries, logging, dynamic mapping, caching, failure notifications, scheduling and more — all with functional Python API. Prefect allows you to take your existing code, and with some small edits, transform it into a DAG (Directed Acyclic Graph) with dependencies already identified [1]. It simplifies the creation of ETL pipelines and dependencies and enables you to strictly focus on the application code instead of the pipeline code (looking at you Airflow). Prefect even enables you to create distributed pipelines to parallelize your data applications.
 
 Databricks at its core is a PaaS (Platform as a Service) around spark that delivers fully managed Spark clusters, interactive & collaborative notebooks (similar to Jupyter), a production pipeline scheduler and a platform for powering your Spark-based applications. They are integrated in both the Azure and AWS ecosystem to make working with big data simple. Databricks enables users to run their custom Spark applications on their managed Spark clusters. It even allows users to schedule their notebooks as Spark jobs. It has completely simplified big data development and the ETL process surrounding it.
 
@@ -21,7 +21,7 @@ There is no prior knowledge needed for this post but however to follow along wit
 
 A task in Prefect is the equivalent of a step in your data pipeline. It is as simple as a Python function in your application or script. There are no restrictions on how simple or complex tasks can be. That being said, it's best to follow coding best practices and develop your functions, so they only do one thing. Prefect themselves also recommend this.
 
-{% include info.html text="In general, we encourage "small tasks" over monolithic ones: each task should perform a discrete logical step of your workflow, but not more. [3][4]" %}
+{% include info.html text="In general, we encourage "small tasks" over monolithic ones: each task should perform a discrete logical step of your workflow, but not more. [2]" %}
 
 By keeping tasks small, you will get the most out of Prefect's engine such as efficient state checkpoints.
 
@@ -192,7 +192,7 @@ with Flow("Databricks-Tasks", schedule=None) as flow:
 flow.run()
 # flow.register("YOUR_PROJECT") to register your flow on the UI
 ```
- 
+
 ## Conclusion
 You now have all the knowledge you need to run Databricks Notebooks and Spark jobs as part of your ETL flows. For more information on Prefect and Databricks jobs, I recommend reading their documentation found [here][8] and [here][9].
 
@@ -202,9 +202,8 @@ As always, I encourage any feedback about my post. You can e-mail me at sidhuash
 You can also reach me and follow me on Twitter at [@ashtonasidhu][10].
 
 ## References
-[1] 
-[2]
-[3] 
+[1] https://docs.prefect.io/core/, Prefect Documentation
+[2] https://docs.prefect.io/core/getting_started/first-steps.html Prefect Getting Started
 
 [1]:	https://docs.prefect.io/core/ "Prefect Documentation"
 [2]:	https://github.com/PrefectHQ/prefect/pull/3247
@@ -216,5 +215,3 @@ You can also reach me and follow me on Twitter at [@ashtonasidhu][10].
 [8]:	https://docs.prefect.io/core/ "Prefect Documentation"
 [9]:	https://docs.databricks.com/dev-tools/api/latest/jobs.html "Databricks API Documentation"
 [10]:	https://twitter.com/ashtonasidhu
-
-#Prefect #Databricks #ETL #Tutorial #Guide #Spark
