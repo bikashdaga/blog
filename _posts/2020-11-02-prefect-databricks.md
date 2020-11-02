@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: "Using Databricks & Prefect to automate your ETL tasks"
 categories: [Prefect, Databricks, ETL, Tutorial, Guide, Spark]
-image: images/prefect\_databricks/intro.png
+image: images/prefect_databricks/intro.png
 title: "Integrating Prefect & Databricks to Manage your Spark Jobs"
 ---
 
