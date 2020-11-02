@@ -121,7 +121,7 @@ with Flow("Databricks-Tasks", schedule=None) as flow:
 
 ```
 
-We first need to create the Databricks job configuration by using our `get_run_now_config` and `get_submit_config` tasks. Pass the configurations to the `json` argument of both the `RunNow` and `SubmitRun` tasks we defined earlier. The `json` parameter takes in a dictionary that matches the `Run Now` and `Submit Run` APIs mentioned above.
+We first need to create the Databricks job configuration by using our `get_run_now_config` and `get_submit_config` tasks.  Pass the run now configuration to the `RunNow` task and the submit run configuration to the `SubmitRun` task through the `json` argument. The `json` parameter takes in a dictionary that matches the `Run Now` and `Submit Run` APIs mentioned above. To run more Databricks jobs we instantiate either the `RunNow` or `SubmitRun` templates we created and pass in a new json job config.
 
 One of the awesome features of a Prefect flow is that it will automatically build a DAG from your tasks. It looks at task inputs as data dependencies and from that, can infer what tasks need to be completed before other tasks can run. For example, since our `run_now_task` has the input `run_now_config`, the flow builds the DAG knowing the `get_run_now_config` task has to run before the `run_now_task`.
 
