@@ -4,7 +4,7 @@ layout: post
 description: "Using Databricks & Prefect to automate your ETL tasks"
 categories: [Prefect, Databricks, ETL, Tutorial, Guide, Spark]
 image: images/prefect_databricks/intro.jpg
-title: "Tutorial: Integrating Prefect & Databricks to Manage your Spark Jobs"
+title: "Integrating Prefect & Databricks to Manage your Spark Jobs"
 ---
 
 Prefect is a workflow management system that enables you to easily take your data applications and add retries, logging, dynamic mapping, caching, failure notifications, scheduling and more — all with functional Python API. Prefect allows you to take your existing code, and with some small edits, transform it into a DAG (Directed Acyclic Graph) with dependencies already identified \[1]. It simplifies the creation of ETL pipelines and dependencies and enables you to strictly focus on the application code instead of the pipeline code (looking at you Airflow). Prefect even enables you to create distributed pipelines to parallelize your data applications.
@@ -155,7 +155,15 @@ def get_submit_config(python_params: list):
     Spark Python Task params must be passed as a list.
     """
     return {
-        "new_cluster": {"spark_version": "2.1.0-db3-scala2.11", "num_workers": 2},
+        "run_name": "MyDatabricksJob",
+        "new_cluster": {
+          "spark_version": "7.3.x-scala2.12",
+          "node_type_id": "r3.xlarge",
+          "aws_attributes": {
+            "availability": "ON_DEMAND"
+          },
+          "num_workers": 10
+        },
         "spark_python_task": {
             "python_file": "/Users/ashton/databricks_task/main.py",
             "parameters": python_params,
