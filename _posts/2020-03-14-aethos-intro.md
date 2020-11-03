@@ -1,8 +1,8 @@
 ---
 toc: true
+layout: post
 description: "Introduction to Aethos."
 categories: [markdown, aethos]
-comments: true
 image: https://miro.medium.com/max/742/1*WdxHNOegMN9Eb9fZRN1cCg.png
 title: "Aethos — A Data Science Library to Automate your Workflow"
 ---
@@ -112,7 +112,7 @@ df[`new_col_name`] = `some_iterable`
 
 # You can also specify what dataset to add it to as well
 df.x_train # pandas dataframe of the training set  
-df.x_test # pandas dataframe of the test set 
+df.x_test # pandas dataframe of the test set
 df.x_train[`new_col`] = `some_iterable`  
 df.x_test[`new_col`] = `some_iterable`
 ```

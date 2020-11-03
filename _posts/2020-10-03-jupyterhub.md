@@ -9,7 +9,7 @@ title: "Tutorial: Stop Running Jupyter Notebooks from your Command Line!"
 
 Jupyter Notebook provides a great platform to produce human-readable documents containing code, equations, analysis, and their descriptions. Some even consider it a powerful development when combining it with NBDev. For such an integral tool, the out of the box start up is not the best. Each use requires starting the Jupyter web application from the command line and entering your token or password. The entire web application relies on that terminal window being open. Some might "daemonize" the process and then use [nohup](https://www.computerhope.com/unix/unohup.htm) to detach it from their terminal, but that's not the most elegant and maintainable solution.
 
-Lucky for us, Jupyter has already come up with a solution to this problem by coming out with an extension of Jupyter Notebooks that runs as a sustainable web application and has built-in user authentication. To add a cherry on top, it can be managed and sustained through Docker allowing for isolated development environments. 
+Lucky for us, Jupyter has already come up with a solution to this problem by coming out with an extension of Jupyter Notebooks that runs as a sustainable web application and has built-in user authentication. To add a cherry on top, it can be managed and sustained through Docker allowing for isolated development environments.
 
 By the end of this post we will leverage the power of JupyterHub to access a Jupyter Notebook instance which can be accessed without a terminal, from multiple devices within your network, and a more user friendly authentication method.
 
@@ -150,7 +150,7 @@ Take note of the following configuration options:
 
 - `c.Spawner.default_url = '/lab'`: Uses Jupyterlab instead of Jupyter Notebook. Comment out this line to use Jupyter Notebook.
 
-- `'/home/sidhu': '/home/jovyan/work'`: I mounted my home directory to the JupyterLab home directory to have access to any projects and notebooks I have on my Desktop. This also allows us to achieve persistence in the case we create new notebooks, they are saved to our local machine and will not get deleted if our Jupyter Notebook Docker container is deleted. 
+- `'/home/sidhu': '/home/jovyan/work'`: I mounted my home directory to the JupyterLab home directory to have access to any projects and notebooks I have on my Desktop. This also allows us to achieve persistence in the case we create new notebooks, they are saved to our local machine and will not get deleted if our Jupyter Notebook Docker container is deleted.
 
 **Remove this line if you do not wish to mount your home directory and do not forget to change `sidhu` to your user name**.
 
@@ -170,7 +170,7 @@ From your other device, navigate to the IP you found on port 8000: `http://IP:80
 
 ### Authenticating
 
-That leaves us with the last task of authenticating to the server. Since we did not set up a LDAP server or OAuth, JupyterHub will use PAM (Pluggable Authentication Module) authentication to authenticate users. This means JupyterHub uses the user name and passwords of the host machine to authenticate. 
+That leaves us with the last task of authenticating to the server. Since we did not set up a LDAP server or OAuth, JupyterHub will use PAM (Pluggable Authentication Module) authentication to authenticate users. This means JupyterHub uses the user name and passwords of the host machine to authenticate.
 
 To make use of this, we will have to create a user on the JupyterHub Docker container. There are other ways of doing this such as having a script placed on the container and executed at container start up but we will do it manually as an exercise. If you tear down or rebuild the container you will have to recreate users.
 

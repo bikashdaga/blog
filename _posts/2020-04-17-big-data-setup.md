@@ -1,13 +1,13 @@
 ---
 toc: true
+layout: post
 description: "Setup your own Big Data infrastructure at home."
 categories: [markdown, big data, hadoop, spark, hive]
-comments: true
 image: images/bigdata_tut/intro.jpg
 title: "Tutorial: How to Setup your own Big Data Environment with Hadoop, Spark and Hive for Data Science"
 ---
 
-Working on your own data science projects are a great opportunity to learn some new skills and hone existing skills, but what if you want to use technologies that you would use in industry such as Hadoop, Spark on a distributed cluster, Hive, etc. and have them all integrated? This is where the value comes from when building your own infrastructure. 
+Working on your own data science projects are a great opportunity to learn some new skills and hone existing skills, but what if you want to use technologies that you would use in industry such as Hadoop, Spark on a distributed cluster, Hive, etc. and have them all integrated? This is where the value comes from when building your own infrastructure.
 
 You become familiar with the technologies, get to know the ins and outs about how it operates, debug and experience the different types of error messages and really get a sense of how the technology works over all instead of just interfacing with it. If you are also working with your own private data or confidential data in general, you may not want to upload it to an external service to do big data processing for privacy or security reasons. So, in this tutorial I'm going to walk through how to setup your own Big Data infrastructure on your own computer, home lab, etc. We're going to setup a single node Hadoop & Hive instance and a "distributed" spark cluster integrated with Jupyter.
 
@@ -30,7 +30,7 @@ Hive is usually added on top of Hadoop to query the data in Hadoop in a SQL like
    - Ad-hoc queries
    - Analysis of huge datasets
 
-Hive is slow and generally used for batch jobs only. A much faster version of Hive would be something like Impala, but for home use - it gets the job done. You can download the latest version of Hive [here](https://downloads.apache.org/hive/hive-3.1.2/). 
+Hive is slow and generally used for batch jobs only. A much faster version of Hive would be something like Impala, but for home use - it gets the job done. You can download the latest version of Hive [here](https://downloads.apache.org/hive/hive-3.1.2/).
 
 {% include info.html text="Make sure you download the binary (bin) version and not the source (src) version!" %}
 
@@ -69,7 +69,7 @@ To get an idea of what it takes to configure the networking and infrastructure o
 
 ## Step 3 - Install Java 8
 
-One of the most important steps of this tutorial. 
+One of the most important steps of this tutorial.
 
 {% include alert.html text="If this is done incorrectly, it will cause a grueling number of hours debugging vague error messages just to realize the problem and solution was so simple." %}
 
@@ -176,7 +176,7 @@ Next we need to edit the following configuration files:
 		<description>The name of the default file system. </description>
 	</property>
 </configuration>
-``` 
+```
 
 `hadoop.tmp.dir`: Fairly self explanatory, just a directory for hadoop to store other temp directories
 `fs.defaultFS`: The IP and port of your file system to access over the network. It should be your IP so other nodes can connect to it if this were a distributed system.
@@ -212,7 +212,7 @@ To find your ip, type `ip addr` or `ifconfig` on the command line:
 
 `dfs.replication`: How many nodes to replicate the data on.
 
-`dfs.name.dir`: Directory for namenode blocks 
+`dfs.name.dir`: Directory for namenode blocks
 
 `dfs.data.dir`: Directory for the data node blocks
 
@@ -354,7 +354,7 @@ The Hive Metastore is the central repository of Hive Metadata. It stores the met
 - Local Metastore: Multiple Hive sessions, have to connect to an external DB.
 - Remote Metastore: Multiple Hive sessions, interact with the metastore using Thrift API, better security and scalability.
 
-To read up on the difference between each type of metastore in more detail, this is a great [link](https://data-flair.training/blogs/apache-hive-metastore/). 
+To read up on the difference between each type of metastore in more detail, this is a great [link](https://data-flair.training/blogs/apache-hive-metastore/).
 
 In this guide we're going to be setting up a remote metastore using a MySQL DB.
 
@@ -548,7 +548,7 @@ SPARK_WORKER_CORES=3
 SPARK_WORKER_MEMORY=8G
 ```
 
-In this configuration, each worker will use 3 cores and have 8GB of memory. Since my machine has 6 cores, we're going to start up 2 workers. Change these values so that it is relative to your machine. For example, if your machine only has 16GB of RAM, a good memory value might be 2 or 4GB. For a full list of environment variables and more information on stand alone mode, you can read the full documentation [here](https://spark.apache.org/docs/latest/spark-standalone.html). If you're wondering about executor memory, that set when submitting or starting applications.	
+In this configuration, each worker will use 3 cores and have 8GB of memory. Since my machine has 6 cores, we're going to start up 2 workers. Change these values so that it is relative to your machine. For example, if your machine only has 16GB of RAM, a good memory value might be 2 or 4GB. For a full list of environment variables and more information on stand alone mode, you can read the full documentation [here](https://spark.apache.org/docs/latest/spark-standalone.html). If you're wondering about executor memory, that set when submitting or starting applications.
 
 ```shell
 docker-compose build
@@ -658,7 +658,7 @@ df = (sparksession
 
 ## Practical Hadoop Use Cases
 
-Besides storing data, Hadoop is also utilized as a Feature Store. Let's say you're apart of a team or organization and they have multiple models. For each model there is a data pipeline that ingests raw data, computes and transforms the data into features. For one or two models this is perfectly fine, but what if you have multiple models? What if across those models features are being reused (i.e log normalized stock prices)? 
+Besides storing data, Hadoop is also utilized as a Feature Store. Let's say you're apart of a team or organization and they have multiple models. For each model there is a data pipeline that ingests raw data, computes and transforms the data into features. For one or two models this is perfectly fine, but what if you have multiple models? What if across those models features are being reused (i.e log normalized stock prices)?
 
 Instead of each data pipeline recomputing the same features, we can create a data pipeline that computes the features once and store it in a Feature Store. The model can now pull features from the Feature Store without any redundant computation. This reduces the number of redundant computations and transformations throughout your data pipelines!
 

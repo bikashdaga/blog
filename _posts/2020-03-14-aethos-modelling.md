@@ -2,7 +2,7 @@
 toc: true
 description: "Introduction to Aethos Modelling."
 categories: [markdown, aethos]
-comments: true
+layout: post
 image: https://miro.medium.com/max/1760/1*-Ng-OvO4PohgDaUL989CzQ.png
 title: "Training, Tracking, Analyzing, Interpreting and Serving Models with One Line of Code"
 ---
