@@ -423,5 +423,26 @@ pre code { font-size: 15px !important; }
 
 /*-----------------------------------*/
 /*----- ADD YOUR STYLES BELOW -------*/
+.site-title { font-family: 'Barlow', sans-serif; font-size: 2rem; }
+
+.post-title { font-family: 'Roboto', sans-serif; }
+
+.page-link { font-family: 'Barlow', sans-serif; font-size: 16px; }
+
+.home #posts { font-family: 'Barlow', sans-serif; }
+
+.post-link { font-family: 'Roboto', sans-serif; }
+
+.post-content p { font-size: 16px; }
+
+.post-content h2 { font-size: 1.5rem; }
+
+.post-content h3 { font-size: 1.4rem; }
+
+.post-content li { font-size: 1rem; }
+
+.footer-col { text-align: right; }
+
+.feed-subscribe { text-align: left; }
 
 /*# sourceMappingURL=style.css.map */

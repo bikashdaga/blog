@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Integrating Prefect &amp; Databricks to Manage your Spark Jobs | Ashton’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Integrating Prefect &amp; Databricks to Manage your Spark Jobs" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Using Databricks &amp; Prefect to automate your ETL tasks" />
+<meta property="og:description" content="Using Databricks &amp; Prefect to automate your ETL tasks" />
+<link rel="canonical" href="https://ashton-sidhu.github.io/blog/prefect/databricks/etl/tutorial/guide/spark/2020/11/02/prefect-databricks.html" />
+<meta property="og:url" content="https://ashton-sidhu.github.io/blog/prefect/databricks/etl/tutorial/guide/spark/2020/11/02/prefect-databricks.html" />
+<meta property="og:site_name" content="Ashton’s Blog" />
+<meta property="og:image" content="https://ashton-sidhu.github.io/blog/images/prefect_databricks/intro.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-11-02T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"Using Databricks &amp; Prefect to automate your ETL tasks","url":"https://ashton-sidhu.github.io/blog/prefect/databricks/etl/tutorial/guide/spark/2020/11/02/prefect-databricks.html","@type":"BlogPosting","headline":"Integrating Prefect &amp; Databricks to Manage your Spark Jobs","dateModified":"2020-11-02T00:00:00-06:00","datePublished":"2020-11-02T00:00:00-06:00","image":"https://ashton-sidhu.github.io/blog/images/prefect_databricks/intro.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://ashton-sidhu.github.io/blog/prefect/databricks/etl/tutorial/guide/spark/2020/11/02/prefect-databricks.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://ashton-sidhu.github.io/blog/feed.xml" title="Ashton's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','G-51W5VE9GNG','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Integrating Prefect &amp; Databricks to Manage your Spark Jobs | Ashton’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Integrating Prefect &amp; Databricks to Manage your Spark Jobs" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Using Databricks &amp; Prefect to automate your ETL tasks" />
+<meta property="og:description" content="Using Databricks &amp; Prefect to automate your ETL tasks" />
+<link rel="canonical" href="https://ashton-sidhu.github.io/blog/prefect/databricks/etl/tutorial/guide/spark/2020/11/02/prefect-databricks.html" />
+<meta property="og:url" content="https://ashton-sidhu.github.io/blog/prefect/databricks/etl/tutorial/guide/spark/2020/11/02/prefect-databricks.html" />
+<meta property="og:site_name" content="Ashton’s Blog" />
+<meta property="og:image" content="https://ashton-sidhu.github.io/blog/images/prefect_databricks/intro.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-11-02T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"Using Databricks &amp; Prefect to automate your ETL tasks","url":"https://ashton-sidhu.github.io/blog/prefect/databricks/etl/tutorial/guide/spark/2020/11/02/prefect-databricks.html","@type":"BlogPosting","headline":"Integrating Prefect &amp; Databricks to Manage your Spark Jobs","dateModified":"2020-11-02T00:00:00-06:00","datePublished":"2020-11-02T00:00:00-06:00","image":"https://ashton-sidhu.github.io/blog/images/prefect_databricks/intro.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://ashton-sidhu.github.io/blog/prefect/databricks/etl/tutorial/guide/spark/2020/11/02/prefect-databricks.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://ashton-sidhu.github.io/blog/feed.xml" title="Ashton's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','G-51W5VE9GNG','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+
+
+<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Ashton&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Integrating Prefect &amp; Databricks to Manage your Spark Jobs</h1><p class="page-description">Using Databricks & Prefect to automate your ETL tasks</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-11-02T00:00:00-06:00" itemprop="datePublished">
+        Nov 2, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#Prefect">Prefect</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#Databricks">Databricks</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#ETL">ETL</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#Tutorial">Tutorial</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#Guide">Guide</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#Spark">Spark</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#prerequisites">Prerequisites</a></li>
+<li class="toc-entry toc-h2"><a href="#prefect-basics">Prefect Basics</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#tasks">Tasks</a></li>
+<li class="toc-entry toc-h3"><a href="#flows">Flows</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#native-databricks-integration-in-prefect">Native Databricks Integration in Prefect</a></li>
+<li class="toc-entry toc-h2"><a href="#creating-a-flow-with-databricks-tasks">Creating a Flow with Databricks Tasks</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#creating-the-tasks">Creating the Tasks</a></li>
+<li class="toc-entry toc-h3"><a href="#creating-the-flow">Creating the Flow</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
+<li class="toc-entry toc-h2"><a href="#feedback">Feedback</a></li>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul><p>Prefect is a workflow management system that enables users to easily take data applications and add retries, logging, dynamic mapping, caching, failure notifications, scheduling and more — all with functional Python API. Prefect allows users to take their existing code and transform it into a DAG (Directed Acyclic Graph) with dependencies already identified [1]. It simplifies the creation of ETL pipelines and dependencies and enables users to strictly focus on the application code instead of the pipeline code (looking at you Airflow). Prefect can even create distributed pipelines to parallelize your data applications.</p>
+
+<p>Databricks at its core is a PaaS (Platform as a Service) that delivers fully managed Spark clusters, interactive &amp; collaborative notebooks (similar to Jupyter), a production pipeline scheduler and a platform for powering your Spark-based applications. It is integrated in both the Azure and AWS ecosystem to make working with big data simple. Databricks enables users to run their custom Spark applications on their managed Spark clusters. It even allows users to schedule their notebooks as Spark jobs. It has completely simplified big data development and the ETL process surrounding it.</p>
+
+<p>Databricks has become such an integral big data ETL tool, one that I use every day at work, so I made a <a href="https://github.com/PrefectHQ/prefect/pull/3247">contribution</a> to the Prefect project enabling users to integrate Databricks jobs with Prefect. In this tutorial we will go over just that — how you can incorporate running Databricks notebooks and Spark jobs in your Prefect flows.</p>
+
+<h2 id="prerequisites">
+<a class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
+<p>There is no prior knowledge needed for this post however a free <a href="https://www.prefect.io" title="Prefect">Prefect</a> account is recommended to implement the example. While this post will touch on Prefect basics, it is not an in depth Prefect tutorial.</p>
+
+<h2 id="prefect-basics">
+<a class="anchor" href="#prefect-basics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prefect Basics</h2>
+<h3 id="tasks">
+<a class="anchor" href="#tasks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tasks</h3>
+
+<p>A task in Prefect is the equivalent of a step in your data pipeline. It is as simple as a Python function in your application or script. There are no restrictions on how simple or complex tasks can be. That being said, it’s best to follow coding best practices and develop your functions, so they only do one thing. Prefect themselves recommend this.</p>
+
+<div class="Toast" style="max-width: 100%;">
+   <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
+   <span class="Toast-content">In general, we encourage small tasks over monolithic ones, each task should perform a discrete logical step of your workflow, but not more. [2]</span>
+</div>
+
+<p>By keeping tasks small, you will get the most out of Prefect’s engine such as efficient state checkpoints.</p>
+
+<h3 id="flows">
+<a class="anchor" href="#flows" aria-hidden="true"><span class="octicon octicon-link"></span></a>Flows</h3>
+
+<p>A flow is what ties all your tasks and their dependencies together. It describes dependencies between tasks, their ordering and the data flow. Flows pull together tasks and make it into a pipeline rounding out your data application.</p>
+
+<p><img src="/blog/images/prefect_databricks/flow.png" alt="" title="Prefect Flow Visualization"></p>
+
+<h2 id="native-databricks-integration-in-prefect">
+<a class="anchor" href="#native-databricks-integration-in-prefect" aria-hidden="true"><span class="octicon octicon-link"></span></a>Native Databricks Integration in Prefect</h2>
+
+<p>I made a contribution to the Prefect project by the implementing the tasks <code class="language-plaintext highlighter-rouge">DatabricksRunNow</code> &amp; <code class="language-plaintext highlighter-rouge">DatabricksRunSubmit</code> enabling seamless integration between Prefect and Databricks. Through these tasks users can externally trigger a defined Databricks job or a single run of a jar, Python script or notebook. Once a task has been executed it uses Databricks native API calls to run notebooks or Spark Jobs. When the task is running it will continue to poll the current status of the run until it’s completed. Once a task is completed it will allow for downstream tasks to run if it is successful.</p>
+
+<h2 id="creating-a-flow-with-databricks-tasks">
+<a class="anchor" href="#creating-a-flow-with-databricks-tasks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a Flow with Databricks Tasks</h2>
+
+<p>Before we get started writing any code, we have to create a Prefect Secret that is going to store our Databricks connection string. From your Prefect Cloud account, click on <code class="language-plaintext highlighter-rouge">Team</code> from the left side menu and go to the <code class="language-plaintext highlighter-rouge">Secrets</code> section. This section is where you manage all the secrets for your Prefect Flows.</p>
+
+<p>To generate the Databricks connection string you will need the host name of your Databricks instance as well as a PAT for your Databricks account. To create a Databricks PAT, follow these steps from the Databricks <a href="https://docs.databricks.com/dev-tools/api/latest/authentication.html" title="PAT Documentation">documentation</a>. The connection string has to be a valid JSON object. The title of the secret has to be <code class="language-plaintext highlighter-rouge">DATABRICKS_CONNECTION_STRING</code>.</p>
+
+<p><img src="/blog/images/prefect_databricks/secrets.png" alt="" title="Prefect Secret for Databricks Connection String"></p>
+
+<h3 id="creating-the-tasks">
+<a class="anchor" href="#creating-the-tasks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating the Tasks</h3>
+
+<p>Let’s start our flow by defining some common tasks that we will need to run our Databricks notebooks and Spark jobs.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">prefect</span> <span class="kn">import</span> <span class="n">task</span><span class="p">,</span> <span class="n">Flow</span>
+<span class="kn">from</span> <span class="nn">prefect.tasks.databricks.databricks_submitjob</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DatabricksRunNow</span><span class="p">,</span>
+    <span class="n">DatabricksSubmitRun</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">prefect.tasks.secrets.base</span> <span class="kn">import</span> <span class="n">PrefectSecret</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="n">PrefectSecret</span><span class="p">(</span><span class="s">"DATABRICKS_CONNECTION_STRING"</span><span class="p">)</span>
+<span class="c1"># Initialize Databricks task class as a template
+# We will then use the task function to pass in unique config options &amp; params
+</span><span class="n">RunNow</span> <span class="o">=</span> <span class="n">DatabricksRunNow</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+<span class="n">SubmitRun</span> <span class="o">=</span> <span class="n">DatabricksSubmitRun</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We define two task objects, <code class="language-plaintext highlighter-rouge">RunNow</code> and <code class="language-plaintext highlighter-rouge">SubmitRun</code>, to act as templates to run our Databricks jobs. We can reuse these same tasks with different configurations to easily create new Databricks jobs. Let’s create some helper tasks to dynamically create the configuration of our jobs.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">task</span>
+<span class="k">def</span> <span class="nf">get_submit_config</span><span class="p">(</span><span class="n">python_params</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="s">"""
+    SubmitRun config template for the DatabricksSubmitRun task,
+
+    Spark Python Task params must be passed as a list.
+    """</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s">"run_name"</span><span class="p">:</span> <span class="s">"MyDatabricksJob"</span><span class="p">,</span>
+        <span class="s">"new_cluster"</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s">"spark_version"</span><span class="p">:</span> <span class="s">"7.3.x-scala2.12"</span><span class="p">,</span>
+          <span class="s">"node_type_id"</span><span class="p">:</span> <span class="s">"r3.xlarge"</span><span class="p">,</span>
+          <span class="s">"aws_attributes"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"availability"</span><span class="p">:</span> <span class="s">"ON_DEMAND"</span>
+          <span class="p">},</span>
+          <span class="s">"num_workers"</span><span class="p">:</span> <span class="mi">10</span>
+        <span class="p">},</span>
+        <span class="s">"spark_python_task"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"python_file"</span><span class="p">:</span> <span class="s">"/Users/ashton/databricks_task/main.py"</span><span class="p">,</span>
+            <span class="s">"parameters"</span><span class="p">:</span> <span class="n">python_params</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+
+
+<span class="o">@</span><span class="n">task</span>
+<span class="k">def</span> <span class="nf">get_run_now_config</span><span class="p">(</span><span class="n">notebook_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="s">"""
+    RunNow config template for the DatabricksSubmitRun task,
+
+    Notebook Task params must be passed as a dictionary.
+    """</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">"job_id"</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="s">"notebook_params"</span><span class="p">:</span> <span class="n">notebook_params</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">get_submit_config</code> task allows us to dynamically pass parameters to a Python script that is on DBFS (Databricks File System) and return a configuration to run a single use Databricks job. You can add more flexibility by creating more parameters that map to configuration options in your Databricks job configuration. The <code class="language-plaintext highlighter-rouge">get_run_now_config</code> executes same task except it returns a configuration for the <code class="language-plaintext highlighter-rouge">DatabricksRunNow</code> task to run a preconfigured Databricks Notebooks job. The schemas of both the <code class="language-plaintext highlighter-rouge">get_run_now_config</code> and <code class="language-plaintext highlighter-rouge">get_submit_config</code> match the <a href="https://docs.databricks.com/dev-tools/api/latest/jobs.html#run-now" title="Run Now API">Run Now</a> and <a href="https://docs.databricks.com/dev-tools/api/latest/jobs.html#runs-submit" title="Run Submit API">Runs Submit</a> API respectively.</p>
+
+<div class="Toast" style="max-width: 100%;">
+   <span class="Toast-icon"><svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg></span>
+   <span class="Toast-content">Python file parameters must be passed as a list and Notebook parameters must be passed as a dictionary.</span>
+</div>
+
+<p>Now let’s create a flow that can run our tasks.</p>
+
+<h3 id="creating-the-flow">
+<a class="anchor" href="#creating-the-flow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating the Flow</h3>
+
+<p>We’re going to create a flow that runs a preconfigured notebook job on Databricks, followed by two subsequent Python script jobs.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">Flow</span><span class="p">(</span><span class="s">"Databricks-Tasks"</span><span class="p">,</span> <span class="n">schedule</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span> <span class="k">as</span> <span class="n">flow</span><span class="p">:</span>
+
+    <span class="n">run_now_config</span> <span class="o">=</span> <span class="n">get_run_now_config</span><span class="p">({</span><span class="s">"param1"</span><span class="p">:</span> <span class="s">"value"</span><span class="p">})</span>
+    <span class="n">submit_config_a</span> <span class="o">=</span> <span class="n">get_submit_config</span><span class="p">([</span><span class="s">"param1"</span><span class="p">])</span>
+    <span class="n">submit_config_b</span> <span class="o">=</span> <span class="n">get_submit_config</span><span class="p">([</span><span class="s">"param2"</span><span class="p">])</span>
+
+    <span class="n">run_now_task</span> <span class="o">=</span> <span class="n">RunNow</span><span class="p">(</span><span class="n">json</span><span class="o">=</span><span class="n">run_now_config</span><span class="p">)</span>
+
+    <span class="n">submit_task_a</span> <span class="o">=</span> <span class="n">SubmitRun</span><span class="p">(</span><span class="n">json</span><span class="o">=</span><span class="n">submit_config_a</span><span class="p">)</span>
+
+    <span class="n">submit_task_b</span> <span class="o">=</span> <span class="n">SubmitRun</span><span class="p">(</span><span class="n">json</span><span class="o">=</span><span class="n">submit_config_b</span><span class="p">)</span>
+
+    <span class="c1"># Since Databricks tasks don't return any data dependencies we can leverage,
+</span>    <span class="c1"># we have to define the dependencies between Databricks tasks themselves
+</span>    <span class="n">flow</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">run_now_task</span><span class="p">,</span> <span class="n">submit_task_a</span><span class="p">)</span>
+    <span class="n">flow</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">submit_task_a</span><span class="p">,</span> <span class="n">submit_task_b</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>We first need to create the Databricks job configuration by using our <code class="language-plaintext highlighter-rouge">get_run_now_config</code> and <code class="language-plaintext highlighter-rouge">get_submit_config</code> tasks.  Pass the run now configuration to the <code class="language-plaintext highlighter-rouge">RunNow</code> task and the submit run configuration to the <code class="language-plaintext highlighter-rouge">SubmitRun</code> task through the <code class="language-plaintext highlighter-rouge">json</code> argument. The <code class="language-plaintext highlighter-rouge">json</code> parameter takes in a dictionary that matches the <code class="language-plaintext highlighter-rouge">Run Now</code> and <code class="language-plaintext highlighter-rouge">Submit Run</code> APIs mentioned above. To run more Databricks jobs we instantiate either the <code class="language-plaintext highlighter-rouge">RunNow</code> or <code class="language-plaintext highlighter-rouge">SubmitRun</code> templates we created and pass in a new json job config.</p>
+
+<p>One of the awesome features of a Prefect flow is that it automatically builds a DAG from your tasks. It looks at task inputs as data dependencies and from that, can infer what tasks need to be completed before other tasks can run. For example, since our <code class="language-plaintext highlighter-rouge">run_now_task</code> has the input <code class="language-plaintext highlighter-rouge">run_now_config</code>, the flow builds the DAG knowing the <code class="language-plaintext highlighter-rouge">get_run_now_config</code> task has to run before the <code class="language-plaintext highlighter-rouge">run_now_task</code>.</p>
+
+<p>Some tasks don’t return data that can be used as inputs in down stream tasks. For example, the Databricks tasks only return a job ID. We can still define the inter-task dependencies of the flow by using the <code class="language-plaintext highlighter-rouge">.add_edge</code> function. This will add dependencies between tasks that aren’t used as inputs for further down stream tasks.  For example, <code class="language-plaintext highlighter-rouge">flow.add_edge(run_now_task, submit_task_a)</code> says that <code class="language-plaintext highlighter-rouge">submit_task_a</code> is a downstream task from the <code class="language-plaintext highlighter-rouge">run_now_task</code> and that <code class="language-plaintext highlighter-rouge">submit_task_a</code> cannot run until the <code class="language-plaintext highlighter-rouge">run_now_task</code> has been completed. By adding the edges to the remaining Databricks task we get our final flow, which you can also view in the Prefect schematics tab.</p>
+
+<p><img src="/blog/images/prefect_databricks/dag.png" alt="" title="DAG of our Flow"></p>
+
+<p>To the run the flow, we call the <code class="language-plaintext highlighter-rouge">.run()</code> method of our flow object — <code class="language-plaintext highlighter-rouge">flow.run()</code>. The final flow then looks like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">prefect</span> <span class="kn">import</span> <span class="n">task</span><span class="p">,</span> <span class="n">Flow</span>
+<span class="kn">from</span> <span class="nn">prefect.tasks.databricks.databricks_submitjob</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DatabricksRunNow</span><span class="p">,</span>
+    <span class="n">DatabricksSubmitRun</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">prefect.tasks.secrets.base</span> <span class="kn">import</span> <span class="n">PrefectSecret</span>
+
+
+<span class="o">@</span><span class="n">task</span>
+<span class="k">def</span> <span class="nf">get_submit_config</span><span class="p">(</span><span class="n">python_params</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="s">"""
+    SubmitRun config template for the DatabricksSubmitRun task,
+
+    Spark Python Task params must be passed as a list.
+    """</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s">"run_name"</span><span class="p">:</span> <span class="s">"MyDatabricksJob"</span><span class="p">,</span>
+        <span class="s">"new_cluster"</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s">"spark_version"</span><span class="p">:</span> <span class="s">"7.3.x-scala2.12"</span><span class="p">,</span>
+          <span class="s">"node_type_id"</span><span class="p">:</span> <span class="s">"r3.xlarge"</span><span class="p">,</span>
+          <span class="s">"aws_attributes"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"availability"</span><span class="p">:</span> <span class="s">"ON_DEMAND"</span>
+          <span class="p">},</span>
+          <span class="s">"num_workers"</span><span class="p">:</span> <span class="mi">10</span>
+        <span class="p">},</span>
+        <span class="s">"spark_python_task"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"python_file"</span><span class="p">:</span> <span class="s">"/Users/ashton/databricks_task/main.py"</span><span class="p">,</span>
+            <span class="s">"parameters"</span><span class="p">:</span> <span class="n">python_params</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+
+
+<span class="o">@</span><span class="n">task</span>
+<span class="k">def</span> <span class="nf">get_run_now_config</span><span class="p">(</span><span class="n">notebook_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="s">"""
+    RunNow config template for the DatabricksSubmitRun task,
+
+    Notebook Task params must be passed as a dictionary.
+    """</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">"job_id"</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="s">"notebook_params"</span><span class="p">:</span> <span class="n">notebook_params</span><span class="p">}</span>
+
+
+<span class="n">conn</span> <span class="o">=</span> <span class="n">PrefectSecret</span><span class="p">(</span><span class="s">"DATABRICKS_CONNECTION_STRING"</span><span class="p">)</span>
+<span class="c1"># Initialize Databricks task class as a template
+# We will then use the task function to pass in unique config options &amp; params
+</span><span class="n">RunNow</span> <span class="o">=</span> <span class="n">DatabricksRunNow</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+<span class="n">SubmitRun</span> <span class="o">=</span> <span class="n">DatabricksSubmitRun</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">Flow</span><span class="p">(</span><span class="s">"Databricks-Tasks"</span><span class="p">,</span> <span class="n">schedule</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span> <span class="k">as</span> <span class="n">flow</span><span class="p">:</span>
+
+    <span class="n">run_now_config</span> <span class="o">=</span> <span class="n">get_run_now_config</span><span class="p">({</span><span class="s">"param1"</span><span class="p">:</span> <span class="s">"value"</span><span class="p">})</span>
+    <span class="n">submit_config_a</span> <span class="o">=</span> <span class="n">get_submit_config</span><span class="p">([</span><span class="s">"param1"</span><span class="p">])</span>
+    <span class="n">submit_config_b</span> <span class="o">=</span> <span class="n">get_submit_config</span><span class="p">([</span><span class="s">"param2"</span><span class="p">])</span>
+
+    <span class="n">run_now_task</span> <span class="o">=</span> <span class="n">RunNow</span><span class="p">(</span><span class="n">json</span><span class="o">=</span><span class="n">run_now_config</span><span class="p">)</span>
+
+    <span class="n">submit_task_a</span> <span class="o">=</span> <span class="n">SubmitRun</span><span class="p">(</span><span class="n">json</span><span class="o">=</span><span class="n">submit_config_a</span><span class="p">)</span>
+
+    <span class="n">submit_task_b</span> <span class="o">=</span> <span class="n">SubmitRun</span><span class="p">(</span><span class="n">json</span><span class="o">=</span><span class="n">submit_config_b</span><span class="p">)</span>
+
+    <span class="c1"># Since Databricks tasks don't return any data dependencies we can leverage,
+</span>    <span class="c1"># we have to define the dependencies between Databricks tasks themselves
+</span>    <span class="n">flow</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">run_now_task</span><span class="p">,</span> <span class="n">submit_task_a</span><span class="p">)</span>
+    <span class="n">flow</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">submit_task_a</span><span class="p">,</span> <span class="n">submit_task_b</span><span class="p">)</span>
+
+<span class="n">flow</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+<span class="c1"># flow.register("YOUR_PROJECT") to register your flow on the UI
+</span></code></pre></div></div>
+
+<h2 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
+<p>You now have all the knowledge you need to run Databricks Notebooks and Spark jobs as part of your ETL flows. For more information on Prefect and Databricks jobs, I recommend reading their documentation found <a href="https://docs.prefect.io/core/" title="Prefect Documentation">here</a> and <a href="https://docs.databricks.com/dev-tools/api/latest/jobs.html" title="Databricks API Documentation">here</a>.</p>
+
+<h2 id="feedback">
+<a class="anchor" href="#feedback" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feedback</h2>
+<p>As always, I encourage any feedback about my post. You can e-mail me at sidhuashton@gmail.com or leave a comment on the post if you have any questions or need any help.</p>
+
+<p>You can also reach me and follow me on Twitter at <a href="https://twitter.com/ashtonasidhu">@ashtonasidhu</a>.</p>
+
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+<ol>
+  <li>
+    <p>https://docs.prefect.io/core/, Prefect Documentation</p>
+  </li>
+  <li>
+    <p>https://docs.prefect.io/core/getting_started/first-steps.html, Prefect Getting Started</p>
+  </li>
+</ol>
+
+
+  </div><a class="u-url" href="/blog/prefect/databricks/etl/tutorial/guide/spark/2020/11/02/prefect-databricks.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>My tech blog for tutorials, guides and opinions!</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/Ashton-Sidhu" title="Ashton-Sidhu"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/ashtonasidhu" title="ashtonasidhu"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

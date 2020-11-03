@@ -1,4 +1,166 @@
-<p>As a data scientist, rapid experimentation is extremely important. If an idea doesn’t work it’s best to fail quickly and find out sooner rather than later.</p>
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Training, Tracking, Analyzing, Interpreting and Serving Models with One Line of Code | Ashton’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Training, Tracking, Analyzing, Interpreting and Serving Models with One Line of Code" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Introduction to Aethos Modelling." />
+<meta property="og:description" content="Introduction to Aethos Modelling." />
+<link rel="canonical" href="https://ashton-sidhu.github.io/blog/markdown/aethos/2020/03/14/aethos-modelling.html" />
+<meta property="og:url" content="https://ashton-sidhu.github.io/blog/markdown/aethos/2020/03/14/aethos-modelling.html" />
+<meta property="og:site_name" content="Ashton’s Blog" />
+<meta property="og:image" content="https://miro.medium.com/max/1760/1*-Ng-OvO4PohgDaUL989CzQ.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-14T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Introduction to Aethos Modelling.","url":"https://ashton-sidhu.github.io/blog/markdown/aethos/2020/03/14/aethos-modelling.html","@type":"BlogPosting","headline":"Training, Tracking, Analyzing, Interpreting and Serving Models with One Line of Code","dateModified":"2020-03-14T00:00:00-05:00","datePublished":"2020-03-14T00:00:00-05:00","image":"https://miro.medium.com/max/1760/1*-Ng-OvO4PohgDaUL989CzQ.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://ashton-sidhu.github.io/blog/markdown/aethos/2020/03/14/aethos-modelling.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://ashton-sidhu.github.io/blog/feed.xml" title="Ashton's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','G-51W5VE9GNG','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Training, Tracking, Analyzing, Interpreting and Serving Models with One Line of Code | Ashton’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Training, Tracking, Analyzing, Interpreting and Serving Models with One Line of Code" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Introduction to Aethos Modelling." />
+<meta property="og:description" content="Introduction to Aethos Modelling." />
+<link rel="canonical" href="https://ashton-sidhu.github.io/blog/markdown/aethos/2020/03/14/aethos-modelling.html" />
+<meta property="og:url" content="https://ashton-sidhu.github.io/blog/markdown/aethos/2020/03/14/aethos-modelling.html" />
+<meta property="og:site_name" content="Ashton’s Blog" />
+<meta property="og:image" content="https://miro.medium.com/max/1760/1*-Ng-OvO4PohgDaUL989CzQ.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-14T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Introduction to Aethos Modelling.","url":"https://ashton-sidhu.github.io/blog/markdown/aethos/2020/03/14/aethos-modelling.html","@type":"BlogPosting","headline":"Training, Tracking, Analyzing, Interpreting and Serving Models with One Line of Code","dateModified":"2020-03-14T00:00:00-05:00","datePublished":"2020-03-14T00:00:00-05:00","image":"https://miro.medium.com/max/1760/1*-Ng-OvO4PohgDaUL989CzQ.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://ashton-sidhu.github.io/blog/markdown/aethos/2020/03/14/aethos-modelling.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://ashton-sidhu.github.io/blog/feed.xml" title="Ashton's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','G-51W5VE9GNG','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+
+
+<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Ashton&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Training, Tracking, Analyzing, Interpreting and Serving Models with One Line of Code</h1><p class="page-description">Introduction to Aethos Modelling.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-14T00:00:00-05:00" itemprop="datePublished">
+        Mar 14, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#markdown">markdown</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#aethos">aethos</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#prepping-the-data">Prepping the Data</a></li>
+<li class="toc-entry toc-h1"><a href="#modelling">Modelling</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#analyzing-models">Analyzing Models</a></li>
+<li class="toc-entry toc-h2"><a href="#interpreting-models">Interpreting Models</a></li>
+<li class="toc-entry toc-h2"><a href="#viewing-models-in-mlflow">Viewing Models in MLFlow</a></li>
+<li class="toc-entry toc-h2"><a href="#serving-models">Serving Models</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#what-else-can-you-do">What Else Can You Do?</a></li>
+<li class="toc-entry toc-h1"><a href="#feedback">Feedback</a></li>
+</ul><p>As a data scientist, rapid experimentation is extremely important. If an idea doesn’t work it’s best to fail quickly and find out sooner rather than later.</p>
 
 <p>When it comes to modelling, rapid experimentation is already fairly simple. All model implementations follow the same API interface so all you have to do is initialize the model and train it. The problem comes now when you have to interpret, track, and compare each model.</p>
 
@@ -6,7 +168,8 @@
 
 <p>I’m going to demonstrate a way to address these problems by training multiple models, each with 1 line of code, view the overall results easily, analyze the models, interpret the models, track the models in MLFlow and serve them using Aethos.</p>
 
-<h1 id="prepping-the-data">Prepping the Data</h1>
+<h1 id="prepping-the-data">
+<a class="anchor" href="#prepping-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prepping the Data</h1>
 
 <p>We’ll use Aethos to quickly prep the data. For more information on how to analyze and transform your datasets with Aethos, check out my previous blog post <a href="https://medium.com/aethos-a-data-science-library-to-automate-workflow-17cd76b073a4">here</a>. Load the Titanic training data from the Aethos repo.</p>
 
@@ -21,7 +184,7 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">at</span><span class="p">.</span><span class="n">Data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target_field</span><span class="o">=</span><span class="s">'Survived'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1802/1*TupqtKz0HX7w1KdAw5RcNA.png" width="901" height="347" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1802/1*TupqtKz0HX7w1KdAw5RcNA.png" width="901" height="347" role="presentation"></p>
 
 <p>The focus of this post is modelling so let’s quickly preprocess the data. We’re going to use the Survived, Pclass, Sex, Age, Fare and Embarked features. insert here</p>
 
@@ -41,11 +204,12 @@
 <span class="n">df</span><span class="p">.</span><span class="n">normalize_numeric</span><span class="p">(</span><span class="s">'fare'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1652/1*hjvdWaRUnBu0aR_vZeUetA.png" width="826" height="359" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1652/1*hjvdWaRUnBu0aR_vZeUetA.png" width="826" height="359" role="presentation"></p>
 
 <p>With Aethos, the transformer is fit to the training set and applied to the test set. With just one line of code both your training and test set have been transformed.</p>
 
-<h1 id="modelling">Modelling</h1>
+<h1 id="modelling">
+<a class="anchor" href="#modelling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modelling</h1>
 
 <p>To train Sklearn, XGBoost, LightGBM, etc. models with Aethos, first transition from the data wrangling object to the Model object.</p>
 
@@ -64,14 +228,14 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lr</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1968/1*ld17UeHatYiPPX814iZrNA.png" width="984" height="100" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1968/1*ld17UeHatYiPPX814iZrNA.png" width="984" height="100" role="presentation"></p>
 
 <p>To train a model with the optimal parameters using Gridsearch, specify the <code class="language-plaintext highlighter-rouge">gridsearch</code> parameter when initializing the model.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lr</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">gridsearch</span><span class="o">=</span><span class="p">{</span><span class="s">'C'</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]},</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1984/1*9WwmWTEq_qYnYdYn9Rq9WQ.png" width="992" height="544" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1984/1*9WwmWTEq_qYnYdYn9Rq9WQ.png" width="992" height="544" role="presentation"></p>
 
 <p>This will return the model with the optimal parameters defined by your Gridsearch scoring method.</p>
 
@@ -83,8 +247,8 @@
 <p>This will perform 5-fold cross validation on your model and display the mean score as well as the learning curve to help gauge data quality, over-fitting, and under-fitting.</p>
 
 <p align="middle">
-    <img class="dj t u ev ak" src="https://miro.medium.com/max/1948/1*hGvqawspAru2kLueK_3g6g.png" width="974" height="444" role="presentation" />
-    <img class="dj t u ev ak" src="https://miro.medium.com/max/1984/1*9WwmWTEq_qYnYdYn9Rq9WQ.png" width="992" height="544" role="presentation" />
+    <img class="dj t u ev ak" src="https://miro.medium.com/max/1948/1*hGvqawspAru2kLueK_3g6g.png" width="974" height="444" role="presentation">
+    <img class="dj t u ev ak" src="https://miro.medium.com/max/1984/1*9WwmWTEq_qYnYdYn9Rq9WQ.png" width="992" height="544" role="presentation">
 </p>
 
 <p>You can also use it with Gridsearch:</p>
@@ -94,7 +258,7 @@
 
 <p>This will first use Gridsearch to train a model with the optimal parameters and then cross validate it. Currently supported cross validation methods are k-fold and stratified k-fold.</p>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1640/1*Hu087E2e7sNrXFNsyzzVdg.png" width="820" height="699" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1640/1*Hu087E2e7sNrXFNsyzzVdg.png" width="820" height="699" role="presentation"></p>
 
 <p>To train multiple models at once (in series or in parallel) specify the <code class="language-plaintext highlighter-rouge">run</code> parameter when defining your model.</p>
 
@@ -113,7 +277,7 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="n">list_models</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1598/1*W2PoK5XdML01ObWDxPgLHQ.png" width="799" height="114" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1598/1*W2PoK5XdML01ObWDxPgLHQ.png" width="799" height="114" role="presentation"></p>
 
 <p>To now run all queued models, by default in parallel:</p>
 
@@ -122,11 +286,12 @@
 
 <p>You can now go grab a coffee or a meal while all your models are trained simultaneously!</p>
 
-<h2 id="analyzing-models">Analyzing Models</h2>
+<h2 id="analyzing-models">
+<a class="anchor" href="#analyzing-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Analyzing Models</h2>
 
 <p>Every model you train by default has a name. This allows you to train multiple versions of the same model with the same model object and API, while still having access to each individual model’s results. You can see each model’s default name in the function header by pressing <code class="language-plaintext highlighter-rouge">Shift + Tab</code> in Jupyter Notebook.</p>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1930/1*v6Nhfwh8MRJTZDY7IvkShA.png" width="965" height="233" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1930/1*v6Nhfwh8MRJTZDY7IvkShA.png" width="965" height="233" role="presentation"></p>
 
 <p>You can also change the model name by specifying a name of your choosing when initializing the function.</p>
 
@@ -135,7 +300,7 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="n">compare_models</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1762/1*ldjb-jJzEj9juJTvibsiPA.png" width="881" height="569" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1762/1*ldjb-jJzEj9juJTvibsiPA.png" width="881" height="569" role="presentation"></p>
 
 <p>You can see every models’ performance against a wide variety of metrics. In a data science project there are predefined metrics you want to compare models against (if you don’t, you should). You can specify those project metrics through the options.</p>
 
@@ -147,7 +312,7 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="n">compare_models</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1762/1*mnUB5A81jPm73JSDqKhFFQ.png" width="881" height="123" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1762/1*mnUB5A81jPm73JSDqKhFFQ.png" width="881" height="123" role="presentation"></p>
 
 <p>You can also view the metrics just for a single model by running the following:</p>
 
@@ -161,14 +326,15 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt</span><span class="p">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">output_file</span><span class="o">=</span><span class="s">'confusion_matrix.png'</span><span class="p">)</span> <span class="c1"># Confusion matrix for the Decision Tree model
 </span></code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/920/1*ZfamBQhQuMjFH7aI6gc2VQ.png" width="460" height="372" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/920/1*ZfamBQhQuMjFH7aI6gc2VQ.png" width="460" height="372" role="presentation"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rf</span><span class="p">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">output_file</span><span class="o">=</span><span class="s">'confusion_matrix.png'</span><span class="p">)</span> <span class="c1"># Confusion matrix for the random forest model
 </span></code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/842/1*oARwsa2CRquJKnnCw9vUog.png" width="421" height="375" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/842/1*oARwsa2CRquJKnnCw9vUog.png" width="421" height="375" role="presentation"></p>
 
-<h2 id="interpreting-models">Interpreting Models</h2>
+<h2 id="interpreting-models">
+<a class="anchor" href="#interpreting-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Interpreting Models</h2>
 
 <p>Aethos comes equipped with automated SHAP use cases to interpret each model. You can view the force, decision, summary, and dependence plot for any model — each with customizable parameters to satisfy your use case.</p>
 
@@ -177,67 +343,69 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lgbm</span><span class="p">.</span><span class="n">decision_plot</span><span class="p">(</span><span class="n">output_file</span><span class="o">=</span><span class="s">'decision_plot.png'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/972/1*7NbpF_RkZZyH7daFfjDQ5Q.png" width="486" height="333" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/972/1*7NbpF_RkZZyH7daFfjDQ5Q.png" width="486" height="333" role="presentation"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lgbm</span><span class="p">.</span><span class="n">force_plot</span><span class="p">(</span><span class="n">output_file</span><span class="o">=</span><span class="s">'force_plot.png'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1768/1*Ch0FccSmO0EhP4jVaViq9Q.png" width="884" height="344" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1768/1*Ch0FccSmO0EhP4jVaViq9Q.png" width="884" height="344" role="presentation"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lgbm</span><span class="p">.</span><span class="n">shap_get_misclassified_index</span><span class="p">()</span>  
 <span class="c1"># [2, 10, 21, 38, 43, 57, 62, 69, 70, 85, 89, 91, 96, 98, 108, 117, 128, 129, 139, 141, 146, 156, 165, 167, 169]  
 </span><span class="n">lgbm</span><span class="p">.</span><span class="n">force_plot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="s">'force_plot_2.png'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1760/1*-Ng-OvO4PohgDaUL989CzQ.png" width="880" height="134" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1760/1*-Ng-OvO4PohgDaUL989CzQ.png" width="880" height="134" role="presentation"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lgbm</span><span class="p">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">output_file</span><span class="o">=</span><span class="s">'summary_plot.png'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/988/1*ZQAH1vFeeb0foFn1lTqvvA.png" width="494" height="321" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/988/1*ZQAH1vFeeb0foFn1lTqvvA.png" width="494" height="321" role="presentation"></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lgbm</span><span class="p">.</span><span class="n">dependence_plot</span><span class="p">(</span><span class="s">'fare'</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="s">'dep_plot.png'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/844/1*3FYBXislUhjrPn5xxQeKDQ.png" width="422" height="291" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/844/1*3FYBXislUhjrPn5xxQeKDQ.png" width="422" height="291" role="presentation"></p>
 
 <p>For a more automated experience, run:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lgbm</span><span class="p">.</span><span class="n">interpret_model</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1578/1*omCNzoZiRl764wukTZC4LA.png" width="789" height="696" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1578/1*omCNzoZiRl764wukTZC4LA.png" width="789" height="696" role="presentation"></p>
 
 <p>This displays an interactive dashboard where you can interpret your model’s prediction using LIME, SHAP, Morris Sensitivity, etc.</p>
 
-<h2 id="viewing-models-in-mlflow">Viewing Models in MLFlow</h2>
+<h2 id="viewing-models-in-mlflow">
+<a class="anchor" href="#viewing-models-in-mlflow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Viewing Models in MLFlow</h2>
 
 <p>As we were training models and viewing results, our experiments were automatically being tracked. If you run <code class="language-plaintext highlighter-rouge">aethos mlflow-ui</code> from the command line, a local MLFlow instance will be started for you to view the results and artifacts of your experiments. Navigate to <a href="http://127.0.0.1:10000">localhost:10000.</a></p>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/3110/1*sGYV3PXwZfiaGgVS5LHYFw.png" width="" height="" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/3110/1*sGYV3PXwZfiaGgVS5LHYFw.png" width="" height="" role="presentation"></p>
 
 <p>Each of your models and any saved artifacts are tracked and can be viewed from the UI, including parameters and metrics! To view and download model artifacts, including the pickle file for a specific model, click on the hyperlink in the date column.</p>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1222/1*Qj0uPwQfKLNX48k1hEEELg.png" width="611" height="905" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1222/1*Qj0uPwQfKLNX48k1hEEELg.png" width="611" height="905" role="presentation"></p>
 
 <p>You get a detailed breakdown of the metrics for the model as well as the model parameters and towards the bottom, you will see all your saved artifacts for a specific model.</p>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/3714/1*XumJ_6hL1jmrCeagfeTahA.png" width="1857" height="400" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/3714/1*XumJ_6hL1jmrCeagfeTahA.png" width="1857" height="400" role="presentation"></p>
 
 <p>Note: Cross validation learning curves and mean score plots are always saved as artifacts.</p>
 
 <p>To change the name of the experiment ( by default it is my-experiment) specify the name when initiating the Model object ( <code class="language-plaintext highlighter-rouge">exp_name</code>), otherwise every model will get added to my-experiment.</p>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1136/1*dAp7y7lFvklShXVgTnXiHw.png" width="568" height="197" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1136/1*dAp7y7lFvklShXVgTnXiHw.png" width="568" height="197" role="presentation"></p>
 
-<h2 id="serving-models">Serving Models</h2>
+<h2 id="serving-models">
+<a class="anchor" href="#serving-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Serving Models</h2>
 
 <p>Once you’ve decided on a model you want to serve for predictions, you can easily generate the required files to serve the model with a RESTful API using FastAPI and Gunicorn.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dt.to_service('titanic')
 </code></pre></div></div>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1174/1*AYq8GvGgFywB9KqZjPE3bA.png" width="587" height="91" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/1174/1*AYq8GvGgFywB9KqZjPE3bA.png" width="587" height="91" role="presentation"></p>
 
 <p>If you’re familiar with MLFlow, you can always use it to serve your models as well. Open a terminal where the deployment files are being kept. I recommend moving these files to a git repository to version control both the model and served files.</p>
 
@@ -249,22 +417,57 @@ docker run -d --name titanic -p 1234:80 titanic:1.0.0
 
 <p>Now navigate to <a href="http://127.0.0.1/docs">localhost:1234/docs</a> to test your API. You can now serve predictions by sending POST requests to 127.0.0.1:1234/predict.</p>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/2604/1*sJNnrTN26U6ZEMr8IPKm0Q.png" width="" height="" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/2604/1*sJNnrTN26U6ZEMr8IPKm0Q.png" width="" height="" role="presentation"></p>
 
-<p><img class="dj t u ev ak" src="https://miro.medium.com/max/3224/1*iwfr8epMkYyg-MyX78C0Hg.png" width="" height="" role="presentation" /></p>
+<p><img class="dj t u ev ak" src="https://miro.medium.com/max/3224/1*iwfr8epMkYyg-MyX78C0Hg.png" width="" height="" role="presentation"></p>
 
 <p><strong>Now one big thing to note</strong>, this is running a default configuration and should not be used in production without securing it and configuring the server for production use. In the future, I will add these configurations myself so you can more or less “throw” a model straight into production with minimal configuration changes.</p>
 
 <p>This feature is still in its infancy and one that I will actively continue to develop and improve.</p>
 
-<h1 id="what-else-can-you-do">What Else Can You Do?</h1>
+<h1 id="what-else-can-you-do">
+<a class="anchor" href="#what-else-can-you-do" aria-hidden="true"><span class="octicon octicon-link"></span></a>What Else Can You Do?</h1>
 
 <p>While this post is a semi- comprehensive guide of modelling with Aethos, you can also run statistical tests such as T-Test, Anovas, use pretrained models such as BERT and XLNet for sentiment analysis and question answering, perform extractive summarization with TextRank, train a gensim LDA model, as well as clustering, anomaly detection and regression models.</p>
 
 <p>The full example can be seen <a href="https://github.com/Ashton-Sidhu/aethos/blob/develop/examples/Modelling%20with%20Aethos.ipynb">here</a>!</p>
 
-<h1 id="feedback">Feedback</h1>
+<h1 id="feedback">
+<a class="anchor" href="#feedback" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feedback</h1>
 
 <p>I encourage all feedback about this post or Aethos. You can message me on <a href="https://twitter.com/ashtonasidhu">twitter</a> or e-mail me at sidhuashton@gmail.com.</p>
 
 <p>Any bug or feature requests, please create an issue on the <a href="https://github.com/Ashton-Sidhu/aethos/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">Github repo</a>. I welcome all feature requests and any contributions. This project is a great starter if you’re looking to contribute to an open source project — you can always message me if you need assistance getting started.</p>
+
+  </div><a class="u-url" href="/blog/markdown/aethos/2020/03/14/aethos-modelling.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>My tech blog for tutorials, guides and opinions!</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/Ashton-Sidhu" title="Ashton-Sidhu"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/ashtonasidhu" title="ashtonasidhu"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
