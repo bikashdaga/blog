@@ -21,7 +21,7 @@ There is no prior knowledge needed for this post however a free [Prefect][2] acc
 
 A task in Prefect is the equivalent of a step in your data pipeline. It is as simple as a Python function in your application or script. There are no restrictions on how simple or complex tasks can be. That being said, it's best to follow coding best practices and develop your functions, so they only do one thing. Prefect themselves recommend this.
 
-{% include info.html text="In general, we encourage small tasks over monolithic ones, each task should perform a discrete logical step of your workflow, but not more. \[2]" %}
+{% include info.html text="In general, we encourage small tasks over monolithic ones, each task should perform a discrete logical step of your workflow, but not more. [2]" %}
 
 By keeping tasks small, you will get the most out of Prefect's engine such as efficient state checkpoints.
 
@@ -29,7 +29,7 @@ By keeping tasks small, you will get the most out of Prefect's engine such as ef
 
 A flow is what ties all your tasks and their dependencies together. It describes dependencies between tasks, their ordering and the data flow. Flows pull together tasks and make it into a pipeline rounding out your data application.
 
-![]({{ site.baseurl }}/images/prefect_databricks/flow.png)
+![]({{ site.baseurl }}/images/prefect_databricks/flow.png "Prefect Flow Visualization")
 
 ## Native Databricks Integration in Prefect
 
@@ -41,7 +41,7 @@ Before we get started writing any code, we have to create a Prefect Secret that 
 
 To generate the Databricks connection string you will need the host name of your Databricks instance as well as a PAT for your Databricks account. To create a Databricks PAT, follow these steps from the Databricks [documentation][3]. The connection string has to be a valid JSON object. The title of the secret has to be `DATABRICKS_CONNECTION_STRING`.
 
-![]({{ site.baseurl }}/images/prefect_databricks/secrets.png)
+![]({{ site.baseurl }}/images/prefect_databricks/secrets.png "Prefect Secret for Databricks Connection String")
 
 ### Creating the Tasks
 
@@ -135,7 +135,7 @@ One of the awesome features of a Prefect flow is that it automatically builds a 
 
 Some tasks don’t return data that can be used as inputs in down stream tasks. For example, the Databricks tasks only return a job ID. We can still define the inter-task dependencies of the flow by using the `.add_edge` function. This will add dependencies between tasks that aren’t used as inputs for further down stream tasks.  For example, `flow.add_edge(run_now_task, submit_task_a)` says that `submit_task_a` is a downstream task from the `run_now_task` and that `submit_task_a` cannot run until the `run_now_task` has been completed. By adding the edges to the remaining Databricks task we get our final flow, which you can also view in the Prefect schematics tab.
 
-![]({{ site.baseurl }}/images/prefect_databricks/dag.png)
+![]({{ site.baseurl }}/images/prefect_databricks/dag.png "DAG of our Flow")
 
 To the run the flow, we call the `.run()` method of our flow object — `flow.run()`. The final flow then looks like this:
 
@@ -218,9 +218,9 @@ As always, I encourage any feedback about my post. You can e-mail me at sidhuash
 You can also reach me and follow me on Twitter at [@ashtonasidhu][8].
 
 ## References
-\[1] https://docs.prefect.io/core/, Prefect Documentation
+1. https://docs.prefect.io/core/, Prefect Documentation
 
-\[2] https://docs.prefect.io/core/getting\_started/first-steps.html Prefect Getting Started
+2. https://docs.prefect.io/core/getting\_started/first-steps.html, Prefect Getting Started
 
 [1]:	https://github.com/PrefectHQ/prefect/pull/3247
 [2]:	https://www.prefect.io "Prefect"
