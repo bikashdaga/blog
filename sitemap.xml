@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://ashton-sidhu.github.io/blog/2020/01/01/Microsoft-Word-Example-Post.html</loc>
+<lastmod>2020-01-01T00:00:00-06:00</lastmod>
+</url>
+<url>
 <loc>https://ashton-sidhu.github.io/blog/markdown/2020/01/14/test-markdown-post.html</loc>
 <lastmod>2020-01-14T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>https://ashton-sidhu.github.io/blog/jupyter/2020/02/20/test.html</loc>
+<lastmod>2020-02-20T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>https://ashton-sidhu.github.io/blog/fastpages/jupyter/2020/02/21/introducing-fastpages.html</loc>
+<lastmod>2020-02-21T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>https://ashton-sidhu.github.io/blog/actions/markdown/2020/03/06/fastpages-actions.html</loc>
+<lastmod>2020-03-06T00:00:00-06:00</lastmod>
 </url>
 <url>
 <loc>https://ashton-sidhu.github.io/blog/markdown/aethos/2020/03/14/aethos-intro.html</loc>
@@ -25,6 +41,10 @@
 <lastmod>2020-05-12T00:00:00-05:00</lastmod>
 </url>
 <url>
+<loc>https://ashton-sidhu.github.io/blog/fastcore/</loc>
+<lastmod>2020-09-01T00:00:00-05:00</lastmod>
+</url>
+<url>
 <loc>https://ashton-sidhu.github.io/blog/markdown/data%20science/jupyter/ml/2020/10/03/jupyterhub.html</loc>
 <lastmod>2020-10-03T00:00:00-05:00</lastmod>
 </url>
@@ -41,6 +61,14 @@
 <lastmod>2020-11-02T00:00:00-06:00</lastmod>
 </url>
 <url>
+<loc>https://ashton-sidhu.github.io/blog/fastlinkcheck/</loc>
+<lastmod>2020-11-17T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>https://ashton-sidhu.github.io/blog/codespaces</loc>
+<lastmod>2020-12-10T00:00:00-06:00</lastmod>
+</url>
+<url>
 <loc>https://ashton-sidhu.github.io/blog/about/</loc>
 </url>
 <url>
@@ -51,5 +79,8 @@
 </url>
 <url>
 <loc>https://ashton-sidhu.github.io/blog/categories/</loc>
+</url>
+<url>
+<loc>https://ashton-sidhu.github.io/blog/page2/</loc>
 </url>
 </urlset>
