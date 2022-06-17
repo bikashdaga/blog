@@ -4,8 +4,6 @@ title: About Me
 permalink: /about/
 ---
 
-# About Me
-
 Hi! My name is Ashton Sidhu and I’m currently a Data Scientist focused in the cyber security area. I’m an engineer at heart and have both a Bachelors of Applied Science and Engineering as well as a Master’s of Engineering focused in Information Systems as well as Predictive and Perscriptive analytics.
 
 I pride myself on being a swiss army knife engineer and being able to be self sufficient. I’ve been a software developer leading and delivering production releases of applications, I’ve also done ETL work, ingesting raw data and storing it into a Data Lake or Warehouse. I’ve also automated the deployment of infrastructure as well as deploy machine learning models into applications as well as production. I’ve always been naturally curious and had this drive be able to learn and do everything. It keeps me motivated to this day and allows me to experiment more freely as well as building my own software, application or product end to end.
