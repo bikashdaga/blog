@@ -64,6 +64,7 @@ exclude:
   - docker-compose.yml
   - action.yml
   - Makefile
+  - settings.ini
 
 # this setting allows you to keep pages organized in the _pages folder
 include:
@@ -74,6 +75,7 @@ default_badges:
   github: true
   binder: true
   colab: true
+  deepnote: true
 
 # Escape HTML in post descriptions
 html_escape:
@@ -115,3 +117,8 @@ kramdown:
   auto_ids: true
   hard_wrap: false
   syntax_highlighter: rouge
+
+# to limit size of xml as it can grow quite large.
+feed:
+  posts_limit: 5 #default posts_limit: 10
+  excerpt_only: true
